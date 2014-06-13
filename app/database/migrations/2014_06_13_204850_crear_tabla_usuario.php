@@ -18,6 +18,8 @@ class CrearTablaUsuario extends Migration {
             $table->string('nombre', 45);
             $table->string('email', 45)->unique();
             $table->string('password', 60);
+            // para "recordar" a los usuarios logeados, lo necesita laravel
+            $table->string('remember_token', 100)->nullable();
 
             // relacion con TipoUsuario
             $table->foreign('codigo_tipo_usuario')->references('codigo_tipo_usuario')->on('tipousuario')->onDelete('CASCADE')->onUpdate('CASCADE');   // foreign key
