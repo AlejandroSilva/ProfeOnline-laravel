@@ -88,3 +88,19 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('logeadoComoAdministrador', function(){
+    // Si NO esta logeado, ir a la pagina de login
+    if( Auth::guest() ){
+        // redirigir a login
+        return Redirect::guest('login');
+    }
+    else{
+        // si esta logeado, pero no es Administrador
+        if( Auth::user()->esAdministrador()==false ){
+            //redirigir a una pagina con un error
+            return Redirect::to('administracion/noautorizado');
+        }
+        // si resulta ser administrador, no redirigir y continuar con la consulta
+    }
+});

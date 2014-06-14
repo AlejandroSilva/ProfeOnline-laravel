@@ -25,4 +25,18 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+    public function esAdministrador(){
+        $tipo_usuario = $this->attributes['codigo_tipo_usuario'];
+        return $tipo_usuario==1;
+    }
+
+    public function esDocente(){
+        $tipo_usuario = $this->attributes['codigo_tipo_usuario'];
+        return $tipo_usuario==2;
+    }
+    public function esAlumno(){
+        $tipo_usuario = $this->attributes['codigo_tipo_usuario'];
+        return $tipo_usuario==3;
+    }
+
 }

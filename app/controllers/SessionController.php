@@ -3,21 +3,22 @@
 class SessionController extends \BaseController {
 
 	public function login(){
-        // si estoy logeado, ir a USUARIO.INICIO
+        // si estoy logeado, ir a INICIO
         if( Auth::check() ){
-            return Redirect::to('/admin');
+            return Redirect::to('/');
         }
         // si no, mostrar el formulario para logear
         else{
             // TODO: mostrar un error al ingresar credenciales erroneas
-            return View::make('Session.loginForm');
+            return View::make('loginForm');
         }
 	}
 	public function validar(){
-        // intentar logear
+        // si se LOGEO CORRECTAMENTE, ir a INICIO
         if( Auth::attempt(Input::only('email', 'password')) ){
-            return Redirect::to('/admin');
-        }else{
+            return Redirect::to('/');
+        }
+        else{
             // TODO: retornnar un error al formulario de login
             return "fallo la autentificacion";
         }
@@ -25,7 +26,7 @@ class SessionController extends \BaseController {
 	public function logout(){
         // destruir la session
         Auth::logout();
-        // volver al home
+        // volver a INICIO
         return Redirect::to('/');
 	}
 }
