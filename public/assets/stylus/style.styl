@@ -1,0 +1,105 @@
+$azul      = #428bca
+$blanco    = #fff
+$celeste   = #ebf0f4
+$plomo     = #f1f1f1
+$verde     = #5cb85c
+
+body
+    background-color $plomo
+
+.navbar
+    margin-bottom 0
+.margin-top-2
+    margin-top 2em
+.margin-bottom-2
+    margin-bottom 2em
+.padding-top-1
+    padding-top 1em
+
+/* ****************  Genericas  *************** */
+.bg-importante
+    background-color $verde
+.bg-blanco
+    background-color $blanco
+.sombra
+    -webkit-box-shadow: 0 0 8px rgba(0,0,0,0.6);
+    box-shadow: 0 0 8px rgba(0,0,0,0.6);
+.tabla
+    display table
+    .tabla-row
+        display table-row
+        .nombre-doc
+        .link-doc
+            display table-cell
+            padding-left 1em
+.textarea-fixed
+    resize none
+    min-height 5em
+
+/* ****************  Pagina Asignatura  *************** */
+.encabezado
+    position relative
+    // background-color orange
+    .titulo
+        display inline-block
+    .suscribete
+        margin-left 1em
+        margin-bottom 1em
+    .opciones
+        position absolute
+        right 0
+        top 2rem
+        .glyphicon
+            font-size 1.5em
+
+.mensaje-del-dia
+    background-color $verde
+    border 3px solid white
+    border-radius 10px
+    color $blanco
+    margin 2em 0
+    padding 1em
+    .glyphicon
+        font-size 90%
+        margin-right 1rem
+    p 
+        font-size 1.2em
+    small
+        color $plomo
+
+.panel-documentos
+.panel-asignatura
+    border-color $azul
+    .panel-heading
+        background-color $azul
+        border-color $azul
+        color $blanco
+        .asignatura
+        .titulo
+        .descripcion
+            margin 0
+            color inherit
+        a
+            color inherit
+    .panel-body
+        background-color $plomo
+    .panel-footer
+        background-color $celeste
+        border-color $azul
+    // listado de documentos
+    ul
+        list-style none
+        a
+            padding-left 1em
+
+.panel-asignatura
+    .panel-heading
+        cursor pointer
+        font-size 1.5em
+    .panel-footer
+        padding 5px
+
+.fade
+    opacity inherit
+.fileupload-progress
+    display none  
