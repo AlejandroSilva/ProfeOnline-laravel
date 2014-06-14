@@ -11,7 +11,7 @@ Route::get('/', function(){
     if( Auth::guest() )
         return View::make('home');
     elseif( Auth::user()->esAdministrador() )
-        return 'Dashboard administrador '.Auth::user()->nombre;
+        return Redirect::to('administracion/inicio');
     elseif( Auth::user()->esDocente() )
         return "Dashboard docente ".Auth::user()->nombre;
     elseif( Auth::user()->esAlumno() )
@@ -31,6 +31,11 @@ Route::get('logout', 'SessionController@logout');
 Route::get('administracion/noautorizado', function(){
     return View::make('administrador.noautorizado');
 });
+// debe estar logeado como administrador para acceder a las siguientes rutas
+Route::get('administracion/inicio', 'AdministradorController@inicio')->before('logeadoComoAdministrador');
+Route::get('administracion/sedes', 'AdministradorController@sedes')->before('logeadoComoAdministrador');
+Route::get('administracion/carreras', 'AdministradorController@carreras')->before('logeadoComoAdministrador');
+Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')->before('logeadoComoAdministrador');
 
 
 // PRUEBAS

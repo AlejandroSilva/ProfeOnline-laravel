@@ -1,10 +1,6 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>login form</title>
-</head>
-<body>
+@extends('layout.base')
+
+@section('content')
     <div>
         <h1>Acceso a Profe Online</h1>
         {{ Form::open([
@@ -24,5 +20,4 @@
 
         {{ Form::close() }}
     </div>
-</body>
-</html>
+@stop
