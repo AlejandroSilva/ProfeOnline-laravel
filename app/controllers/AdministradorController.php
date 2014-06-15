@@ -22,9 +22,6 @@ class AdministradorController extends \BaseController {
 
 // cada vez que se muestre la siguiente vista, se cargaran datos desde la BD y se le entregaran para que los muestre
 View::composer('administrador.sedes', function ($view) {
-    //$view->recentPosts = Post::orderBy('id', 'desc')->take(5)->get();
-    //$view->with('count', User::count());
-
-    //$view->with('mensaje', 'este es un mensaje');
-    $view->usuarios= User::all();
+    // a la vista le entregamos todas las sedes en la BD
+    $view->sedes = Sede::all();
 });

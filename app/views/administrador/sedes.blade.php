@@ -19,7 +19,6 @@
         <div class="encabezado">
             <h1 class="titulo">Sedes</h1>
             <p>Estas son las sedes existentes.... (continuar con la descripción)</p>
-            {{ $usuarios }}
         </div>
     </section>
 
@@ -56,6 +55,15 @@
             </tr>
             </thead>
             <tbody>
+            @foreach ($sedes as $sede)
+                <tr>
+                    <td>{{$sede->codigo_sede}}</td>
+                    <td>{{$sede->nombre}}</td>
+                    <td>{{$sede->ciudad}}</td>
+                    <td>{{$sede->direccion}}</td>
+                    <td>{{$sede->telefono}}</td>
+                </tr>
+            @endforeach
             </tbody>
         </table>
     </section>
