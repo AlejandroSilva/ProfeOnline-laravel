@@ -5,5 +5,5 @@
 
     <a href="login">Accede a tu cuenta</a>
     <br/>
-    <a href="registro">Dar de Alta</a>
+    <a href="registro">Registrar</a>
 @stop

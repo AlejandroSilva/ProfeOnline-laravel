@@ -34,6 +34,7 @@
                     @if (Auth::check()==true)
                         <li><a href="{{URL::to('logout')}}">Desconectar</a></li>
                     @else
+                        <li><a href="{{URL::to('registro')}}">Registrar</a></li>
                         <li><a href="{{URL::to('login')}}">Ingresar</a></li>
                     @endif
                 </ul>

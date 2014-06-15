@@ -4,6 +4,7 @@
 Route::get('registro', function(){
     return View::make('registro');
 });
+Route::post('registro', 'SessionController@registro');
 
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
