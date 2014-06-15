@@ -9,13 +9,15 @@
         <div>
             {{ Form::label("email", "Correo electronico") }}
             {{ Form::input("email", "email") }}
+            {{ $errors->first('email') }}
         </div>
         <div>
             {{ Form::label("password", "Contraseña") }}
             {{ Form::input("password", "password") }}
+            {{ $errors->first('password') }}
         </div>
         <div>
-            {{ Form::submit('Entrar') }}
+            {{ Form::submit('Ingresar') }}
         </div>
 
         {{ Form::close() }}

@@ -41,13 +41,24 @@ class SessionController extends \BaseController {
         }
 	}
 	public function validar(){
-        // si se LOGEO CORRECTAMENTE, ir a INICIO
-        if( Auth::attempt(Input::only('email', 'password')) ){
-            return Redirect::to('/');
-        }
+        // validar los datos de entrada
+        $validacion = Validator::make( Input::all(), [
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+        // si la validacion falla, mostrar los mensajes de error
+        if( $validacion->fails() )
+            return Redirect::back()->withInput()->withErrors( $validacion->messages() );
         else{
-            // TODO: retornnar un error al formulario de login
-            return "fallo la autentificacion";
+            // si la validacion fue correcta, intentar logear
+            // si se LOGEO CORRECTAMENTE, ir a INICIO
+            if( Auth::attempt(Input::only('email', 'password')) ){
+                return Redirect::to('/');
+            }
+            else{
+                // error: el usuario o contraseña no son validos
+                return Redirect::back()->withInput()->withErrors(array('email' => 'Usuario o contraseña invalidos'));
+            }
         }
 	}
 	public function logout(){
