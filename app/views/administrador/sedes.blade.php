@@ -23,23 +23,38 @@
     </section>
 
     <section>
-        <h2>Crear nueva Sede</h2>
-        <!-- TODO: modificar el formulario utilizando Bootstrap -->
-        <form action="post" id="form-sedes">
-            <label for="in-nombre">Nombre</label>
-            <input type="text" id="in-nombre" min=2>
-            <br>
-            <label for="in-ciudad">Ciudad</label>
-            <input type="text" id="in-ciudad">
-            <br>
-            <label for="in-direccion">Dirección</label>
-            <input type="text" id="in-direccion">
-            <br>
-            <label for="in-telefono">Telefono</label>
-                <input type="text" id="in-telefono">
-                <br>
-                <input type="submit">
-        </form>
+        @if( isset($creacionCorrecta) )
+            <h1>Sede agregada correctamente</h1>
+        @else
+            <h2>Crear nueva Sede</h2>
+            <!-- TODO: modificar el formulario utilizando Bootstrap -->
+            {{ Form::open([
+                'action'=>'AdministradorController@crearSede'
+            ]) }}
+
+                <div>
+                {{ Form::label('nombre', 'Nombre') }}
+                {{ Form::text('nombre') }}
+                {{ $errors->first('nombre') }}
+                </div>
+                <div>
+                    {{ Form::label('ciudad', 'Ciudad') }}
+                    {{ Form::text('ciudad') }}
+                    {{ $errors->first('ciudad') }}
+                </div>
+                <div>
+                    {{ Form::label('direccion', 'Direccion') }}
+                    {{ Form::text('direccion') }}
+                    {{ $errors->first('direccion') }}
+                </div>
+                <div>
+                    {{ Form::label('telefono', 'Telefono') }}
+                    {{ Form::text('telefono') }}
+                    {{ $errors->first('telefono') }}
+                </div>
+                {{ Form::submit('Crear Sede') }}
+            {{ Form::close() }}
+        @endif
     </section>
     <section>
         <h2>Sedes existentes</h2>
