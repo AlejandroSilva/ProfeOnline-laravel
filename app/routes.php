@@ -39,6 +39,7 @@ Route::post('administracion/crearSede','AdministradorController@crearSede')->bef
 Route::get('administracion/carreras', 'AdministradorController@carreras')->before('logeadoComoAdministrador');
 Route::post('administracion/crearCarrera','AdministradorController@crearCarrera')->before('logeadoComoAdministrador');
 Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')->before('logeadoComoAdministrador');
+Route::post('administracion/crearAsignatura','AdministradorController@crearAsignatura')->before('logeadoComoAdministrador');
 
 
 // PRUEBAS
