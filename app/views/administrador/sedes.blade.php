@@ -21,7 +21,6 @@
             <p>Estas son las sedes existentes.... (continuar con la descripción)</p>
         </div>
     </section>
-
     <section>
         @if( isset($creacionCorrecta) )
             <h1>Sede agregada correctamente</h1>
