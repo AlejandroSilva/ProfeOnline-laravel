@@ -14,7 +14,7 @@ Route::get('/', function(){
     elseif( Auth::user()->esAdministrador() )
         return Redirect::to('administracion/inicio');
     elseif( Auth::user()->esDocente() )
-        return "Dashboard docente ".Auth::user()->nombre;
+        return Redirect::to('docente/inicio');
     elseif( Auth::user()->esAlumno() )
         return "Dashboard alumno ".Auth::user()->nombre;
     else{
@@ -41,9 +41,22 @@ Route::post('administracion/crearCarrera','AdministradorController@crearCarrera'
 Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')->before('logeadoComoAdministrador');
 Route::post('administracion/crearAsignatura','AdministradorController@crearAsignatura')->before('logeadoComoAdministrador');
 
+// PAGINAS DEL DOCENTE
+Route::get('docente/noautorizado', 'DocenteController@noautorizado');
+Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
+Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
+Route::get('docente/suscritas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
+
 
 // PRUEBAS
 // solo puede acceder a esta ruta si paso por el filtro que verifica que sea administardor
 Route::get('test', function(){
     return "Estoy logeado como Administrado!!  :D";
 })->before('logeadoComoAdministrador');    // debe estar logeado como administrador
+
+// obtener un parametro de una una url desde un Request
+Route::get('/asigtest/{asig_id}', function($asig_id){
+    var_dump( Request::is('asigtest/*') ); // verificar que este en una ruta, util para los menu
+    var_dump( Request::segment(2) );  // el segundo elemento de la url, en nuestro caso, el ID
+    return "esta url es un test";
+});

@@ -104,3 +104,19 @@ Route::filter('logeadoComoAdministrador', function(){
         // si resulta ser administrador, no redirigir y continuar con la consulta
     }
 });
+
+Route::filter('logeadoComoDocente', function(){
+    // Si NO esta logeado, ir a la pagina de login
+    if( Auth::guest() ){
+        // redirigir a login
+        return Redirect::guest('login');
+    }
+    else{
+        // si esta logeado, pero no es un Docente
+        if( Auth::user()->esDocente()==false ){
+            //redirigir a una pagina con un error
+            return Redirect::to('docente/noautorizado');
+        }
+        // si resulta ser docente, no redirigir y continuar con la consulta
+    }
+});
