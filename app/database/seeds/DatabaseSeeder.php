@@ -17,5 +17,6 @@ class DatabaseSeeder extends Seeder {
         $this->call('AsignaturaSeeder');
 
         $this->call('TipoSuscripcionSeeder');
+        $this->call('SuscripcionSeeder');
 	}
 }

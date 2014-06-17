@@ -18,6 +18,6 @@ class CrearTablaAsignatura extends Migration {
 	}
 
 	public function down(){
-		Schemma::drop('asignatura');
+		Schema::drop('asignatura');
 	}
 }

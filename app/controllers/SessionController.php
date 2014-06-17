@@ -36,7 +36,6 @@ class SessionController extends \BaseController {
         }
         // si no, mostrar el formulario para logear
         else{
-            // TODO: mostrar un error al ingresar credenciales erroneas
             return View::make('loginForm');
         }
 	}
