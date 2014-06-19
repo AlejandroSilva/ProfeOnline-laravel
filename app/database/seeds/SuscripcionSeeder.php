@@ -24,17 +24,17 @@ class SuscripcionSeeder extends Seeder {
                 ),
                 // Alumnos suscritos
                 array(
-                    'codigo_tipo_suscripcion' => '2',   // creador
+                    'codigo_tipo_suscripcion' => '2',   // suscrito
                     'codigo_usuario' => '6',            // Alumno 1
                     'codigo_asignatura' => '1'          // Economia
                 ),
                 array(
-                    'codigo_tipo_suscripcion' => '2',   // creador
+                    'codigo_tipo_suscripcion' => '2',   // suscrito
                     'codigo_usuario' => '6',            // Alumno 1
                     'codigo_asignatura' => '3'          // Contabilidad General
                 ),
                 array(
-                    'codigo_tipo_suscripcion' => '2',   // creador
+                    'codigo_tipo_suscripcion' => '2',   // suscrito
                     'codigo_usuario' => '7',            // Alumno 2
                     'codigo_asignatura' => '1'          // Economia
                 )

@@ -24,4 +24,14 @@ class Asignatura extends Eloquent implements UserInterface, RemindableInterface 
         // 'esta Asignatura, pertenece a UNA Carrera
         return $this->belongsTo('Carrera', 'codigo_carrera');
     }
+
+    // todas las suscripciones que tiene esta asignatura
+    public function suscripciones(){
+        return $this->hasMany('Suscripcion', 'codigo_asignatura', 'codigo_asignatura');
+    }
+
+    // retorna una relacion: la suscripcion del creador de la asignatura
+    public function suscripcionDocente(){
+        return $this->hasOne('Suscripcion', 'codigo_asignatura', 'codigo_asignatura')->where('codigo_tipo_suscripcion', '=', '1');
+    }
 }

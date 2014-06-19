@@ -45,8 +45,11 @@ Route::post('administracion/crearAsignatura','AdministradorController@crearAsign
 Route::get('docente/noautorizado', 'DocenteController@noautorizado');
 Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
-Route::get('docente/suscritas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
+Route::get('docente/suscritas', 'DocenteController@suscritas')->before('logeadoComoDocente');
 
+
+// PADINAS DE LOS ALUMNOS
+Route::get('alumno/suscritas', 'DocenteController@suscritas');   // temporal
 
 // PRUEBAS
 // solo puede acceder a esta ruta si paso por el filtro que verifica que sea administardor
