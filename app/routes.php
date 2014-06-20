@@ -5,6 +5,18 @@ Route::get('registro', function(){
     return View::make('registro');
 });
 Route::post('registro', 'SessionController@registro');
+Route::get('noautorizado', function(){
+    // definimos valores por defecto
+    $titulo = "Acceso no permitido";
+    $mensaje = "no puede acceder a esta pagina";
+    // si nos Redirigieron y entregaron un titulo y/o un mensaje, los asignamos
+    if( Session::has('titulo') )
+        $titulo = Session::get('titulo');
+    if( Session::has('mensaje') )
+        $mensaje = Session::get('mensaje');
+    // llamamos a la vista, con el titulo y el mensaje deseado
+    return View::make('noautorizado')->withTitulo($titulo)->withMensaje($mensaje);
+});
 
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
@@ -29,9 +41,6 @@ Route::get('logout', 'SessionController@logout');
 
 
 // PAGINAS DEL ADMINISTRADOR
-Route::get('administracion/noautorizado', function(){
-    return View::make('administrador.noautorizado');
-});
 // debe estar logeado como administrador para acceder a las siguientes rutas
 Route::get('administracion/inicio', 'AdministradorController@inicio')->before('logeadoComoAdministrador');
 Route::get('administracion/sedes', 'AdministradorController@sedes')->before('logeadoComoAdministrador');
@@ -42,14 +51,13 @@ Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')-
 Route::post('administracion/crearAsignatura','AdministradorController@crearAsignatura')->before('logeadoComoAdministrador');
 
 // PAGINAS DEL DOCENTE
-Route::get('docente/noautorizado', 'DocenteController@noautorizado');
 Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
 Route::get('docente/suscritas', 'DocenteController@suscritas')->before('logeadoComoDocente');
 
 
 // PADINAS DE LOS ALUMNOS
-Route::get('alumno/suscritas', 'DocenteController@suscritas');   // temporal
+Route::get('asignaturas_suscritas', 'AlumnoController@suscritas');
 
 // PRUEBAS
 // solo puede acceder a esta ruta si paso por el filtro que verifica que sea administardor

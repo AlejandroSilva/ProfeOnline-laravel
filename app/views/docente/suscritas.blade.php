@@ -1,4 +1,4 @@
-@extends('docente.layout')
+@extends('layout.doscolumnas')
 
 @section('columna-lateral')
     <h3>Mis asignaturas</h3>

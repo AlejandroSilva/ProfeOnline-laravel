@@ -25,13 +25,27 @@
                 <a class="navbar-brand" href="{{URL::to('/')}}">ProfeOnline</a>
             </div>
             <div class="collapse navbar-collapse">
-                <!--los elementos a la izquierda-->
+                {{--los elementos a la izquierda--}}
                 <ul class="nav navbar-nav">
-                    @yield('navbar-items')
+                    {{-- rutas publicas --}}
+                    <li class="active"><a href="{{URL::to('/')}}">Inicio</a></li>
+                    <li class="active"><a href="{{URL::to('/')}}">Buscar</a></li>
+
+                    @if (Auth::check()==true)
+                        {{-- rutas solo para usuarios logeados --}}
+                        <li class="active"><a href="{{URL::to('/docente/suscritas')}}">Suscritas</a></li>
+                        <li class="active"><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
+
+                        {{-- ruta solo para el administrador --}}
+                        @if( Auth::user()->esAdministrador() )
+                            <li class="active"><a href="{{URL::to('/')}}">Administracion</a></li>
+                        @endif
+                    @endif
                 </ul>
                 {{-- login o logout dependiendo del estado de la sesion --}}
                 <ul class="nav navbar-nav pull-right">
                     @if (Auth::check()==true)
+                        <li><a href="#">Bienvenido {{Auth::user()->nombre}}</a></li>
                         <li><a href="{{URL::to('logout')}}">Desconectar</a></li>
                     @else
                         <li><a href="{{URL::to('registro')}}">Registrar</a></li>

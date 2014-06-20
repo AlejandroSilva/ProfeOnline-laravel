@@ -1,9 +1,5 @@
 @extends('layout.doscolumnas')
 
-@section('navbar-items')
-<li class="active"><a href="{{URL::to('/')}}">Administracion</a></li>
-@stop
-
 @section('columna-lateral')
 <h3>Administración</h3>
 <ul class="nav nav-pills nav-stacked">

@@ -99,7 +99,9 @@ Route::filter('logeadoComoAdministrador', function(){
         // si esta logeado, pero no es Administrador
         if( Auth::user()->esAdministrador()==false ){
             //redirigir a una pagina con un error
-            return Redirect::to('administracion/noautorizado');
+            return Redirect::to('noautorizado')
+                ->withTitulo('Acceso no autorizado')
+                ->withMensaje('Debes identificarte como administrador para acceder a esta pagina.');
         }
         // si resulta ser administrador, no redirigir y continuar con la consulta
     }
@@ -115,7 +117,9 @@ Route::filter('logeadoComoDocente', function(){
         // si esta logeado, pero no es un Docente
         if( Auth::user()->esDocente()==false ){
             //redirigir a una pagina con un error
-            return Redirect::to('docente/noautorizado');
+            return Redirect::to('noautorizado')
+                ->withTitulo('Acceso no autorizado')
+                ->withMensaje('Debes identificarte como Docente para acceder a esta pagina.');
         }
         // si resulta ser docente, no redirigir y continuar con la consulta
     }
