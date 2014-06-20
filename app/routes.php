@@ -28,7 +28,7 @@ Route::get('/', function(){
     elseif( Auth::user()->esDocente() )
         return Redirect::to('docente/inicio');
     elseif( Auth::user()->esAlumno() )
-        return "Dashboard alumno ".Auth::user()->nombre;
+        return View::make('alumno/inicio');
     else{
         return "no existe una pagina de inicio para tu tipo de usuario, contacta al administrador";
     }
@@ -53,11 +53,11 @@ Route::post('administracion/crearAsignatura','AdministradorController@crearAsign
 // PAGINAS DEL DOCENTE
 Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
-Route::get('docente/suscritas', 'DocenteController@suscritas')->before('logeadoComoDocente');
 
+// PAGINAS DE LOS ALUMNOS
+// listado de las asignaturas a las que esta suscrito
+Route::get('asignaturas_suscritas', 'AlumnoController@suscritas')->before('auth');
 
-// PADINAS DE LOS ALUMNOS
-Route::get('asignaturas_suscritas', 'AlumnoController@suscritas');
 
 // PRUEBAS
 // solo puede acceder a esta ruta si paso por el filtro que verifica que sea administardor

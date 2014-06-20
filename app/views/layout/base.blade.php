@@ -33,12 +33,12 @@
 
                     @if (Auth::check()==true)
                         {{-- rutas solo para usuarios logeados --}}
-                        <li class="active"><a href="{{URL::to('/docente/suscritas')}}">Suscritas</a></li>
-                        <li class="active"><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
+                        <li class="active"><a href="{{URL::to('/asignaturas_suscritas')}}">Suscritas</a></li>
 
-                        {{-- ruta solo para el administrador --}}
                         @if( Auth::user()->esAdministrador() )
                             <li class="active"><a href="{{URL::to('/')}}">Administracion</a></li>
+                        @elseif( Auth::user()->esDocente() )
+                            <li class="active"><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
                         @endif
                     @endif
                 </ul>
