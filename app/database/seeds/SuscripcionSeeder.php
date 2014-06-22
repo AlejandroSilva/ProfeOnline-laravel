@@ -22,6 +22,11 @@ class SuscripcionSeeder extends Seeder {
                     'codigo_usuario' => '4',            // Docente 2
                     'codigo_asignatura' => '3'          // Contabilidad General
                 ),
+                array(
+                    'codigo_tipo_suscripcion' => '1',   // creador
+                    'codigo_usuario' => '4',            // Docente 2
+                    'codigo_asignatura' => '2'          // Administración de  Empresas
+                ),
                 // Alumnos suscritos
                 array(
                     'codigo_tipo_suscripcion' => '2',   // suscrito

@@ -39,4 +39,13 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $tipo_usuario==3;
     }
 
+
+    // retorna TRUE o FALSE dependiendo si este usuario se encuentra suscrito a una Asignatura
+    public function estaSuscritoA($codigo_asignatura){
+        $suscripcion = Suscripcion::
+              where('codigo_usuario', '=', $this->attributes['codigo_usuario'])
+            ->where('codigo_asignatura', '=', $codigo_asignatura)
+            ->first();
+        return $suscripcion!=null;
+    }
 }

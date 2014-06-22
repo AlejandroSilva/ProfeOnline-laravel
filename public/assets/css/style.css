@@ -129,3 +129,7 @@ body {
 .fileupload-progress {
   display: none;
 }
+
+.form-suscribir{
+  display: inline-block;
+}

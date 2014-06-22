@@ -18,6 +18,13 @@ Route::get('noautorizado', function(){
     return View::make('noautorizado')->withTitulo($titulo)->withMensaje($mensaje);
 });
 
+// mostrar la vista de una asignatura, dependiendo del tipo de usuario que la visite son las opciones que estaran disponibles
+Route::get('asignatura/{cod_asig}', 'AlumnoController@ver_asignatura');
+// ruta para suscribir al usuario logeado a una asignatura
+Route::post('asignatura/{cod_asig}/suscribir', 'AlumnoController@suscribir')->before('auth');
+// ruta para dar de baja al usuario logeado de una asignatura
+Route::post('asignatura/{cod_asig}/dardebaja', 'AlumnoController@dardebaja')->before('auth');
+
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
     // si no esta logeado, mostrar la pagina HOME
@@ -57,7 +64,6 @@ Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before
 // PAGINAS DE LOS ALUMNOS
 // listado de las asignaturas a las que esta suscrito
 Route::get('asignaturas_suscritas', 'AlumnoController@suscritas')->before('auth');
-
 
 // PRUEBAS
 // solo puede acceder a esta ruta si paso por el filtro que verifica que sea administardor
