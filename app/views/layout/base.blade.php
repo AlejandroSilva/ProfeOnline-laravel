@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Boceto del proyecto</title>
+    <title>Profe Online</title>
     <!-- styles -->
     <link rel="stylesheet" href="{{url('assets/vendor/bootstrap-3.1.1/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url('assets/css/style.css')}}">

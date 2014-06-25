@@ -77,6 +77,7 @@ class AlumnoController extends \BaseController {
         return Redirect::back();
     }
 
+    // muestra todas las asignaturas existentes en el sistema
     public function buscarTodas(){
         // obtener todas las asignaturas
         $asignatura = Asignatura::all();
@@ -84,6 +85,7 @@ class AlumnoController extends \BaseController {
         return View::make('alumno.buscar')->with("asignaturas", $asignatura);
     }
 
+    // muestra las asignaturas que contienen dentro de su nombre el texto ingresado en el formulario
     public function buscarPorNombre(){
         // el nombre buscado por el formulario
         $nombre = Input::get('nombre');
@@ -93,17 +95,20 @@ class AlumnoController extends \BaseController {
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
     }
 
-
-    // funcion pendiente hasta que se pueda obtener el listado de asignaturas de un docente
+    // muestra las asignaturas que son creadas por el nombre del docente que se ingreso en el formulario
     public function buscarPorDocente(){
         // el nombre buscado por el formulario
         $nombreDocente = Input::get('nombreDocente');
 
-        // obtener el usuario con el nombre (el primer match)
-        $docente = User::where('nombre', 'LIKE', '%'.$nombreDocente.'%')->first();
+        // obtener el listado de usuarios/docentes que tengan el strign en sus nombres
+        $docentes = User::where('nombre', 'LIKE', '%'.$nombreDocente.'%')->get();
 
-        // obtener las asignaturas que estan a su nombre
-        $asignaturas = $docente->asignaturasCreadas();
+        // obtener todas las asignaturas de los usuarios/docentes que se encontraron
+        $asignaturas = array();
+        foreach($docentes as $docente){
+            // obtener las asignaturas
+            $asignaturas = array_merge( $asignaturas, $docente->asignaturasCreadas() );
+        }
 
         // mostrar las asignaturas
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);

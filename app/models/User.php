@@ -39,7 +39,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $tipo_usuario==3;
     }
 
-
     // retorna TRUE o FALSE dependiendo si este usuario se encuentra suscrito a una Asignatura
     public function estaSuscritoA($codigo_asignatura){
         $suscripcion = Suscripcion::
@@ -58,6 +57,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Suscripcion', 'codigo_usuario', 'codigo_usuario')->where('codigo_tipo_suscripcion', '=', '1');
     }
 
+    // entrega un array con todas las asignaturas que esta suscrito el usuario
     public function asignaturasSuscritas(){
         // obtenemos las suscripciones relacionadas a este usuario
         $suscripciones = $this->suscripciones;
@@ -71,6 +71,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $asignaturas;
     }
 
+    // entrega un array con todas las asignaturas creadas por el usuario
     public function asignaturasCreadas(){
         // obtenemos las suscripciones relacionadas a este usuario
         $suscripciones = $this->suscripcionesTipo1;
