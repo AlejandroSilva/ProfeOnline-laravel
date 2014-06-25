@@ -8,6 +8,10 @@ class DocenteController extends \BaseController {
     }
 
     public function misAsignaturas(){
-        return View::make('docente.misasignaturas');
+        // obtenemos el listado de todas las suscipciones que administra
+        $asignaturas = Auth::user()->asignaturasCreadas();
+
+        // se las entregamos a la vista para que las muestre
+        return View::make('docente.misasignaturas')->with('asignaturas', $asignaturas);
     }
 }

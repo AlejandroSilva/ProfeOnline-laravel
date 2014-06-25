@@ -20,7 +20,7 @@ class Suscripcion extends Eloquent implements UserInterface, RemindableInterface
 
     public function asignatura(){
         // esta Suscripcion, esta asociada a UNA Asignatura
-        return $this->belongsTo('Asignatura', 'codigo_asignatura');
+        return $this->belongsTo('Asignatura', 'codigo_asignatura', 'codigo_asignatura');
     }
     public function usuario(){
         // esta Suscripcion, esta asociada a UN Usuario

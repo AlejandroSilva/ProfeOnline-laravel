@@ -3,20 +3,9 @@
 class AlumnoController extends \BaseController {
 
     public function suscritas(){
-        // obtenemos el codigo_de_usuario del usuario logeado
-        $codigo_usuario = Auth::user()->codigo_usuario;
-        // obtenemos el listado de todas las suscipciones que tiene
-        $suscripciones = Suscripcion::where('codigo_usuario', '=', $codigo_usuario)->get();
-
-        // el listado de asignaturas, listo para ser entregado a la vista
-        $asignaturas = array();
-        foreach( $suscripciones as $sus ){
-            // asignatura de la suscripcion
-            $asignatura = $sus->asignatura;
-
-            // agregar al array la asignatura suscrita
-            array_push($asignaturas, $asignatura);
-        }
+        // obtenemos el listado de las asignaturas suscritas
+        $asignaturas = Auth::user()->asignaturasSuscritas();
+        // se las entregamos a la vista para que las muestre
         return View::make('alumno.suscritas')->with("asignaturas", $asignaturas);
     }
 
@@ -43,11 +32,7 @@ class AlumnoController extends \BaseController {
         }
 
         // validar que la suscripcion no exista previamente
-        $suscripcion = Suscripcion::
-            where('codigo_usuario', '=', $codigo_usuario)
-            ->where('codigo_asignatura', '=', $codigo_asignatura)
-            ->first();
-        if( $suscripcion!=null ){
+        if( Auth::user()->estaSuscritoA($codigo_asignatura) ){
             return Redirect::back()->withErrors( array('error' => 'este usuario ya esta suscrito a la asignatura') );
         }
 
@@ -96,7 +81,6 @@ class AlumnoController extends \BaseController {
         // obtener todas las asignaturas
         $asignatura = Asignatura::all();
         // mostrar las asignaturas
-//        return View::make('alumno.buscar')->with("asignaturas", $asignatura);
         return View::make('alumno.buscar')->with("asignaturas", $asignatura);
     }
 
