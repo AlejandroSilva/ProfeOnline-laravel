@@ -29,7 +29,7 @@
                 <ul class="nav navbar-nav">
                     {{-- rutas publicas --}}
                     <li class="active"><a href="{{URL::to('/')}}">Inicio</a></li>
-                    <li class="active"><a href="{{URL::to('/')}}">Buscar</a></li>
+                    <li class="active"><a href="{{URL::to('/buscar')}}">Buscar</a></li>
 
                     @if (Auth::check()==true)
                         {{-- rutas solo para usuarios logeados --}}

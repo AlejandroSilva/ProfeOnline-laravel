@@ -14,13 +14,7 @@ class AlumnoController extends \BaseController {
             // asignatura de la suscripcion
             $asignatura = $sus->asignatura;
 
-            // obtener el Usuario que creo la asignatura
-            $suscripDocente = $asignatura->suscripcionDocente;
-            $docente = User::find( $suscripDocente->codigo_usuario );
-
-            // a la asignatura, asignarle el docente
-            $asignatura->docente = $docente;
-
+            // agregar al array la asignatura suscrita
             array_push($asignaturas, $asignatura);
         }
         return View::make('alumno.suscritas')->with("asignaturas", $asignaturas);
@@ -34,13 +28,9 @@ class AlumnoController extends \BaseController {
         if($asig==null)
             return View::make('asignaturaNoEncontrada');
 
-        // obtener el Usuario que creo la asignatura
-        $suscripDocente = $asig->suscripcionDocente;
-        $docente = User::find( $suscripDocente->codigo_usuario );
-
-        return View::make('asignatura')
-            ->with('asignatura', $asig)
-            ->with('docente', $docente);
+        // si existe, mostrar si informacion
+        else
+            return View::make('asignatura')->with('asignatura', $asig);
     }
 
     public function suscribir($codigo_asignatura){
@@ -91,8 +81,7 @@ class AlumnoController extends \BaseController {
         }
 
         // validar que no sea su creador, los dueños de una asignatura no pueden darse de baja
-        $suscripDocente = $asignatura->suscripcionDocente;
-        if( $suscripDocente->codigo_usuario == $codigo_usuario ){
+        if( $asignatura->getDocente()->codigo_usuario == $codigo_usuario ){
             return Redirect::back()->withErrors( array('error' => 'eres el docente que creo la asignatura, no te puedes dar de baja.') );
         }
 
@@ -101,5 +90,12 @@ class AlumnoController extends \BaseController {
 
         // volver a la pagina anterior con los nuevos cambios
         return Redirect::back();
+    }
+
+    public function buscarTodas(){
+        // obtener todas las asignaturas
+        $asignatura = Asignatura::all();
+        // mostrarlas
+        return View::make('alumno.buscar')->with("asignaturas", $asignatura);
     }
 }

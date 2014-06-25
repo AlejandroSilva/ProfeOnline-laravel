@@ -34,4 +34,11 @@ class Asignatura extends Eloquent implements UserInterface, RemindableInterface 
     public function suscripcionDocente(){
         return $this->hasOne('Suscripcion', 'codigo_asignatura', 'codigo_asignatura')->where('codigo_tipo_suscripcion', '=', '1');
     }
+
+    public function getDocente(){
+        // obtiene la suscripcion del docente
+        $suscripcionDocente = $this->suscripcionDocente;
+        // entrega el usuario asociado
+        return User::where('codigo_usuario', '=', $suscripcionDocente->codigo_usuario)->first();
+    }
 }

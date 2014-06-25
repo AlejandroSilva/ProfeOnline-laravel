@@ -25,6 +25,9 @@ Route::post('asignatura/{cod_asig}/suscribir', 'AlumnoController@suscribir')->be
 // ruta para dar de baja al usuario logeado de una asignatura
 Route::post('asignatura/{cod_asig}/dardebaja', 'AlumnoController@dardebaja')->before('auth');
 
+// buscar las asignaturas existentes en el sistema
+Route::get('buscar', 'AlumnoController@buscarTodas');
+
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
     // si no esta logeado, mostrar la pagina HOME

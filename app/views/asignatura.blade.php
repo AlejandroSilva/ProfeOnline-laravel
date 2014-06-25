@@ -8,7 +8,7 @@
             {{-- si esta logeado, mostrar alguna de las opciones --}}
             @if( Auth::check() )
                 {{-- Si el usuario logeado es el Docente que creo la asignatura, entonces puede Configurar, Enviar documentos, etc. --}}
-                @if( Auth::user()->codigo_usuario==$docente->codigo_usuario )
+                @if( Auth::user()->codigo_usuario == $asignatura->getDocente()->codigo_usuario )
                     <div class="opciones">
                         <a class="btn">Enviar <span class="glyphicon glyphicon-cloud-upload"></span></a>
                         <a class="btn">Administrar <span class="glyphicon glyphicon-cog"></span></a>
@@ -35,7 +35,7 @@
                 @endif
             @endif
             {{-- si no esta logeado, no puede realizar ninguna accion... --}}
-            <p>Profesor: <a href="FALTA-POR-DEFINIR">{{ $docente->nombre }}</a></p>
+            <p>Profesor: <a href="FALTA-POR-DEFINIR">{{ $asignatura->getDocente()->nombre }}</a></p>
         </div>
 
         {{-- MOSTRAR EL MENSAJE DEL DIA --}}
