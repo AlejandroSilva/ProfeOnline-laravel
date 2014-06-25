@@ -98,13 +98,13 @@ class AlumnoController extends \BaseController {
     public function buscarPorDocente(){
         // el nombre buscado por el formulario
         $nombreDocente = Input::get('nombreDocente');
+
         // obtener el usuario con el nombre (el primer match)
         $docente = User::where('nombre', 'LIKE', '%'.$nombreDocente.'%')->first();
-        // obtener las asignaturas que estan a su nombre
-        // (...)
 
-        // hacer la consulta para obtener las asignaturas
-        $asignaturas = Asignatura::where('nombre', 'LIKE', '%'.$nombre.'%')->get();
+        // obtener las asignaturas que estan a su nombre
+        $asignaturas = $docente->asignaturasCreadas();
+
         // mostrar las asignaturas
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
     }
