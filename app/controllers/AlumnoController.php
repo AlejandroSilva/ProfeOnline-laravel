@@ -95,7 +95,33 @@ class AlumnoController extends \BaseController {
     public function buscarTodas(){
         // obtener todas las asignaturas
         $asignatura = Asignatura::all();
-        // mostrarlas
+        // mostrar las asignaturas
+//        return View::make('alumno.buscar')->with("asignaturas", $asignatura);
         return View::make('alumno.buscar')->with("asignaturas", $asignatura);
+    }
+
+    public function buscarPorNombre(){
+        // el nombre buscado por el formulario
+        $nombre = Input::get('nombre');
+        // hacer la consulta para obtener las asignaturas
+        $asignaturas = Asignatura::where('nombre', 'LIKE', '%'.$nombre.'%')->get();
+        // mostrar las asignaturas
+        return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
+    }
+
+
+    // funcion pendiente hasta que se pueda obtener el listado de asignaturas de un docente
+    public function buscarPorDocente(){
+        // el nombre buscado por el formulario
+        $nombreDocente = Input::get('nombreDocente');
+        // obtener el usuario con el nombre (el primer match)
+        $docente = User::where('nombre', 'LIKE', '%'.$nombreDocente.'%')->first();
+        // obtener las asignaturas que estan a su nombre
+        // (...)
+
+        // hacer la consulta para obtener las asignaturas
+        $asignaturas = Asignatura::where('nombre', 'LIKE', '%'.$nombre.'%')->get();
+        // mostrar las asignaturas
+        return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
     }
 }

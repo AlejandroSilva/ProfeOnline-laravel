@@ -27,6 +27,8 @@ Route::post('asignatura/{cod_asig}/dardebaja', 'AlumnoController@dardebaja')->be
 
 // buscar las asignaturas existentes en el sistema
 Route::get('buscar', 'AlumnoController@buscarTodas');
+Route::post('buscar/porNombre', 'AlumnoController@buscarPorNombre');
+Route::post('buscar/porDocente', 'AlumnoController@buscarPorDocente');
 
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){

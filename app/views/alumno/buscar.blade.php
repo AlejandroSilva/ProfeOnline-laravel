@@ -2,8 +2,13 @@
 
 @section('columna-central')
     <div class="encabezado">
-        <h1 class="titulo">Asignaturas disponibles</h1>
+        @if( sizeof($asignaturas)==0 )
+            <h1 class="titulo">No se encontraron asignaturas</h1>
+        @else
+            <h1 class="titulo">Asignaturas disponibles</h1>
+        @endif
     </div>
+
     @foreach( $asignaturas as $asig )
     <section class="margin-top-2">
         <div class="panel panel-asignatura margin-bottom-2 sombra">
@@ -16,16 +21,24 @@
 
 @section('columna-lateral')
     <h3>Filtrar por:</h3>
-    <div class="row padding-top-1">
-        <div class="col-md-10">
-        <input type="text" class="form-control" placeholder="...por nombre">
-    </div>
-        <button type="submit" class="btn btn-success col-md-2"><span class="glyphicon glyphicon-search"></span></button>
-    </div>
-    <div class="row padding-top-1">
-        <div class="col-md-10">
-            <input type="text" class="form-control" placeholder="...por profesor">
+    {{ Form::open( array('url'=>'buscar/porNombre') ) }}
+        <div class="row padding-top-1">
+            <div class="col-md-10">
+                {{ Form::text('nombre', '', array('class'=>'form-control', 'placeholder'=>'...por nombre') ) }}
+            </div>
+            <button type="submit" class="btn btn-success col-md-2"><span class="glyphicon glyphicon-search"></span></button>
         </div>
-        <button type="submit" class="btn btn-success col-md-2"><span class="glyphicon glyphicon-search"></span></button>
+    {{ Form::close() }}
+
+    {{ Form::open( array('url'=>'buscar/porDocente') ) }}
+        <div class="row padding-top-1">
+            <div class="col-md-10">
+                {{ Form::text('nombreDocente', '', array('class'=>'form-control', 'placeholder'=>'...por nombre de docente') ) }}
+            </div>
+            <button type="submit" class="btn btn-success col-md-2"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+    {{ Form::close() }}
+    <div class="row padding-top-1">
+        <a href="{{ URL::to('/buscar') }}" class="btn btn-success col-md-4 col-md-offset-4">Ver todas</a>
     </div>
 @stop
