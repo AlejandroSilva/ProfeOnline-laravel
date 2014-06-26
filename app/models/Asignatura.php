@@ -41,4 +41,9 @@ class Asignatura extends Eloquent implements UserInterface, RemindableInterface 
         // entrega el usuario asociado
         return User::where('codigo_usuario', '=', $suscripcionDocente->codigo_usuario)->first();
     }
+
+    // Una Asisgnatura tiene Muchas Publicaciones
+    public function publicaciones(){
+        return $this->hasMany('Publicacion', 'codigo_asignatura');
+    }
 }

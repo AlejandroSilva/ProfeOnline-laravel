@@ -46,42 +46,45 @@
 
         <section>
             {{-- MOSTRAR LOS DOCUMENTOS QUE HAN SIDO COMPARTIDOS POR EL DOCENTE --}}
-            <article class="panel panel-documentos sombra">
-                <div class="panel-heading">
-                    <h3 class="titulo">Modulo 3: Aislantes</h3>
-                    <p class="descripcion">Los documentos para la proxima prueba</p>
-                </div>
-                <div class="panel-body">
-                    <div class="tabla">
-                        <div class="tabla-row">
-                            <p class="nombre-doc">9- AISLANTES.pdf</p><a href="#" class="link-doc">
-                            <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
-                        </div>
-                        <div class="tabla-row">
-                            <p class="nombre-doc">10- EFECTO JOULE.pdf</p><a href="#" class="link-doc">
-                            <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
-                        </div>
-                        <div class="tabla-row">
-                            <p class="nombre-doc">11- LEY DE OHM.pdf</p><a href="#" class="link-doc">
-                            <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+
+            @foreach( $asignatura->publicaciones()->get() as $publicacion )
+                <article class="panel panel-documentos sombra">
+                    <div class="panel-heading">
+                        <h3 class="titulo">{{ $publicacion->titulo }}</h3>
+                        <p class="descripcion">{{ $publicacion->mensaje }}</p>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tabla">
+                            <div class="tabla-row">
+                                <p class="nombre-doc">9- AISLANTES.pdf</p><a href="#" class="link-doc">
+                                <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+                            </div>
+                            <div class="tabla-row">
+                                <p class="nombre-doc">10- EFECTO JOULE.pdf</p><a href="#" class="link-doc">
+                                <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+                            </div>
+                            <div class="tabla-row">
+                                <p class="nombre-doc">11- LEY DE OHM.pdf</p><a href="#" class="link-doc">
+                                <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-8">
-                            <p><span class="glyphicon glyphicon-tags"></span> Tags:
-                                <span class="label label-info">resistividad</span>
-                                <span class="label label-info">electricidad</span>
-                                <span class="label label-info">campos</span>
-                                <span class="label label-info">aislantes</span>
-                            </p>
-                        </div>
-                        <div class="col-md-3">
-                            <span class="glyphicon glyphicon-calendar"></span> Publicado: 23-03-2014
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p><span class="glyphicon glyphicon-tags"></span> Tags:
+                                    <span class="label label-info">resistividad</span>
+                                    <span class="label label-info">electricidad</span>
+                                    <span class="label label-info">campos</span>
+                                    <span class="label label-info">aislantes</span>
+                                </p>
+                            </div>
+                            <div class="col-md-4">
+                                <span class="glyphicon glyphicon-calendar"></span> Publicado: {{ $publicacion->created_at }}
+                            </div>
                         </div>
                     </div>
-                </div>
-            </article>
+                </article>
+            @endforeach
         </section>
 @stop
