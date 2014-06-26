@@ -11,6 +11,7 @@ class CrearTablaPublicacion extends Migration {
             $table->integer('codigo_asignatura')->length(10)->unsigned();
             $table->string('titulo', 45);
             $table->string('mensaje');
+            $table->boolean('destacada')->default(false);
             $table->timestamps();   // fecha/hora de creacion y modificacion
 
             // foreign key

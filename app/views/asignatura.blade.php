@@ -39,15 +39,22 @@
         </div>
 
         {{-- MOSTRAR EL MENSAJE DEL DIA --}}
-        <div class="mensaje-del-dia importante sombra">
-            <h2><span class="glyphicon glyphicon-info-sign"></span>MENSAJE DEL DIA</h2>
-            <p>ESTE ES UN MENSAJE DEL DIA, UN MENSAJE "STICKY" DEL DOCENTE A SUS ALUMNOS...</p>
-        </div>
+        @foreach( $asignatura->publicacionesDestacadas()->get() as $publicacion )
+            <div class="mensaje-del-dia importante sombra">
+                <h2><span class="glyphicon glyphicon-info-sign"></span>{{ $publicacion->titulo }}</h2>
+                <p>{{ $publicacion->mensaje }}</p>
+            </div>
+        @endforeach
 
         <section>
             {{-- MOSTRAR LOS DOCUMENTOS QUE HAN SIDO COMPARTIDOS POR EL DOCENTE --}}
 
-            @foreach( $asignatura->publicaciones()->get() as $publicacion )
+            {{-- hack feo para asignar variables dentro de blade: --}}
+            {{-- */   $publicaciones = $asignatura->publicacionesNormales()->get()  /* --}}
+            @if( sizeof($publicaciones)==0 )
+                <h3>Esta asignatura aún no tiene publicaciones</h3>
+            @endif
+            @foreach( $publicaciones as $publicacion )
                 <article class="panel panel-documentos sombra">
                     <div class="panel-heading">
                         <h3 class="titulo">{{ $publicacion->titulo }}</h3>
