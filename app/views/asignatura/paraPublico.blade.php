@@ -5,45 +5,20 @@
         <div class="encabezado">
             <h1 class="titulo">{{ $asignatura->nombre }}</h1>
 
-            {{-- si esta logeado, mostrar alguna de las opciones --}}
-            @if( Auth::check() )
-                {{-- Si el usuario logeado es el Docente que creo la asignatura, entonces puede Configurar, Enviar documentos, etc. --}}
-                @if( Auth::user()->codigo_usuario == $asignatura->getDocente()->codigo_usuario )
-                    <div class="opciones">
-                        <a class="btn">Enviar <span class="glyphicon glyphicon-cloud-upload"></span></a>
-                        <a class="btn">Administrar <span class="glyphicon glyphicon-cog"></span></a>
-                    </div>
-                @else
-                    {{-- Si esta suscrito, puede darse de baja. Si no, entonces puede suscribirse--}}
-                    @if( Auth::user()->estaSuscritoA( $asignatura->codigo_asignatura )==true )
-                        {{ Form::open(array(
-                        'url'=>'asignatura/'.$asignatura->codigo_asignatura.'/dardebaja',
-                            'class'=>'form-suscribir'
-                        )) }}
-                        {{ Form::submit('Dar de Baja', array('class'=>'btn btn-warning suscribete') ) }}
-                        {{ $errors->first('error') }}
-                        {{ Form::close()  }}
-                    @else
-                        {{ Form::open(array(
-                            'url'=>'asignatura/'.$asignatura->codigo_asignatura.'/suscribir',
-                            'class'=>'form-suscribir'
-                        )) }}
-                        {{ Form::submit('Suscribir', array('class'=>'btn btn-success suscribete') ) }}
-                        {{ $errors->first('error') }}
-                        {{ Form::close()  }}
-                    @endif
-                @endif
-            @endif
-            {{-- si no esta logeado, no puede realizar ninguna accion... --}}
+            @yield('opciones-encabezado')
+
             <p>Profesor: <a href="FALTA-POR-DEFINIR">{{ $asignatura->getDocente()->nombre }}</a></p>
         </div>
 
         {{-- MOSTRAR EL MENSAJE DEL DIA --}}
         @foreach( $asignatura->publicacionesDestacadas()->get() as $publicacion )
-            <div class="mensaje-del-dia importante sombra">
-                <h2><span class="glyphicon glyphicon-info-sign"></span>{{ $publicacion->titulo }}</h2>
+            <article class="mensaje-del-dia importante sombra" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}">
+                <div class="row">
+                    <h2 class="col-md-10"><span class="glyphicon glyphicon-info-sign"></span>{{ $publicacion->titulo }}</h2>
+                    @yield('opciones-publicacion-destacada')
+                </div>
                 <p>{{ $publicacion->mensaje }}</p>
-            </div>
+            </article>
         @endforeach
 
         <section>
@@ -55,9 +30,12 @@
                 <h3>Esta asignatura aún no tiene publicaciones</h3>
             @endif
             @foreach( $publicaciones as $publicacion )
-                <article class="panel panel-documentos sombra">
+                <article class="panel panel-documentos sombra" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}">
                     <div class="panel-heading">
-                        <h3 class="titulo">{{ $publicacion->titulo }}</h3>
+                        <div class="row">
+                            <h3 class="titulo col-md-10">{{ $publicacion->titulo }}</h3>
+                            @yield('opciones-publicacion')
+                        </div>
                         <p class="descripcion">{{ $publicacion->mensaje }}</p>
                     </div>
                     <div class="panel-body">

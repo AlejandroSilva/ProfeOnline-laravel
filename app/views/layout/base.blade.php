@@ -28,17 +28,17 @@
                 {{--los elementos a la izquierda--}}
                 <ul class="nav navbar-nav">
                     {{-- rutas publicas --}}
-                    <li class="active"><a href="{{URL::to('/')}}">Inicio</a></li>
-                    <li class="active"><a href="{{URL::to('/buscar')}}">Buscar</a></li>
+                    <li class=""><a href="{{URL::to('/')}}">Inicio</a></li>
+                    <li class=""><a href="{{URL::to('/buscar')}}">Buscar</a></li>
 
                     @if (Auth::check()==true)
                         {{-- rutas solo para usuarios logeados --}}
-                        <li class="active"><a href="{{URL::to('/asignaturas_suscritas')}}">Suscritas</a></li>
+                        <li class=""><a href="{{URL::to('/asignaturas_suscritas')}}">Suscritas</a></li>
 
                         @if( Auth::user()->esAdministrador() )
-                            <li class="active"><a href="{{URL::to('/')}}">Administracion</a></li>
+                            <li class=""><a href="{{URL::to('/')}}">Administracion</a></li>
                         @elseif( Auth::user()->esDocente() )
-                            <li class="active"><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
+                            <li class=""><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
                         @endif
                     @endif
                 </ul>
@@ -60,5 +60,6 @@
     <div class="container bg-blanco">
         @yield('content')
     </div>
+    @yield('footer')
 </body>
 </html>

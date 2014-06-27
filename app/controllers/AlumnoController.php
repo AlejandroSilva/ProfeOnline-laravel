@@ -11,15 +11,26 @@ class AlumnoController extends \BaseController {
 
     public function ver_asignatura($codigo_asignatura){
         // obtenemos la asignatura de interes
-        $asig = Asignatura::find($codigo_asignatura);
+        $asignatura = Asignatura::find($codigo_asignatura);
 
         // si la asignatura no existe, mostrar una vista con el error
-        if($asig==null)
-            return View::make('asignaturaNoEncontrada');
+        if($asignatura==null)
+            return View::make('asignatura.noEncontrada');
 
-        // si existe, mostrar si informacion
-        else
-            return View::make('asignatura')->with('asignatura', $asig);
+        // definir el tipo de vista para la Asignatura segun el usuario que la visita
+        if( Auth::check() ){
+            // Si el usuario logeado es el Docente que creo la asignatura, entonces puede Configurar, Enviar documentos, etc.
+            if( Auth::user()->codigo_usuario == $asignatura->getDocente()->codigo_usuario ){
+                // mostrar la vista para el Docente Creador (para administrar)
+                return View::make('asignatura.paraDocenteCreador')->with('asignatura', $asignatura);
+            }else{
+                // mostrar la vista para un usuario normal
+                return View::make('asignatura.paraUsuarios')->with('asignatura', $asignatura);
+            }
+        }else{
+            // mostrar la vista publica de la pagina, sin mayores opciones
+            return View::make('asignatura.paraPublico')->with('asignatura', $asignatura);
+        }
     }
 
     public function suscribir($codigo_asignatura){
@@ -112,5 +123,39 @@ class AlumnoController extends \BaseController {
 
         // mostrar las asignaturas
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
+    }
+    /*
+    esta logeado? (filtro)
+    es docente? (filtro)
+    es dueño de la asignatura?
+    */
+    public function destacarPublicacion(){
+        $codigo_publicacion = Input::get('codigo_publicacion');
+
+        // obtener la publicacion deseada
+        $publicacion = Publicacion::find($codigo_publicacion);
+        if($publicacion==null){
+            return Response::json( array('message'=>'no existe la publicacion que desea calificar'),400);  // bad request
+        }
+
+        // obtener la asignatura a la que pertenece la publicacion
+        $asignatura = $publicacion->asignatura;
+
+        // cualquier publicacion destacada anterior, ahora no lo es
+        foreach( $asignatura->publicacionesDestacadas as $destacada ){
+            $destacada->destacada = 0;
+            $destacada->save();
+        }
+
+        // si la seleccionada es destacada, dejarla como normal
+        if( $publicacion->destacada==1 ){
+            return Response::json( array('message'=>'la publicacion ya no es destacada'), 200);  // bad request
+        }else{
+            // la publicacion seleccionada, es la nueva destacada
+            $publicacion->destacada = 1;
+            $publicacion->save();
+
+            return Response::json( array('message'=>'la publicacion ha sido destacada') );
+        }
     }
 }

@@ -30,6 +30,9 @@ Route::get('buscar', 'AlumnoController@buscarTodas');
 Route::post('buscar/porNombre', 'AlumnoController@buscarPorNombre');
 Route::post('buscar/porDocente', 'AlumnoController@buscarPorDocente');
 
+// seleccionar una publicacion y marcarla como destacada
+Route::post('destacarPublicacion', 'AlumnoController@destacarPublicacion');
+
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
     // si no esta logeado, mostrar la pagina HOME

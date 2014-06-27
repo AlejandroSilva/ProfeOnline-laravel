@@ -133,3 +133,9 @@ body {
 .form-suscribir{
   display: inline-block;
 }
+
+
+
+.mensaje-del-dia a{
+    color: inherit;
+}
