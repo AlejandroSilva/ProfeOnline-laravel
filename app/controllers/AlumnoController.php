@@ -125,9 +125,10 @@ class AlumnoController extends \BaseController {
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
     }
     /*
-    esta logeado? (filtro)
-    es docente? (filtro)
-    es dueño de la asignatura?
+     * Queda pendiente las verificaciones de:
+     * - el usuario esta logeado? (filtro)
+     * - el usuario es docente? (filtro)
+     * - El usuario es dueño de la publicacion/asignatura?
     */
     public function destacarPublicacion(){
         $codigo_publicacion = Input::get('codigo_publicacion');
