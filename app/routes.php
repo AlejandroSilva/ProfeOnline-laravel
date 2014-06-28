@@ -5,18 +5,6 @@ Route::get('registro', function(){
     return View::make('registro');
 });
 Route::post('registro', 'SessionController@registro');
-Route::get('noautorizado', function(){
-    // definimos valores por defecto
-    $titulo = "Acceso no permitido";
-    $mensaje = "no puede acceder a esta pagina";
-    // si nos Redirigieron y entregaron un titulo y/o un mensaje, los asignamos
-    if( Session::has('titulo') )
-        $titulo = Session::get('titulo');
-    if( Session::has('mensaje') )
-        $mensaje = Session::get('mensaje');
-    // llamamos a la vista, con el titulo y el mensaje deseado
-    return View::make('noautorizado')->withTitulo($titulo)->withMensaje($mensaje);
-});
 
 // mostrar la vista de una asignatura, dependiendo del tipo de usuario que la visite son las opciones que estaran disponibles
 Route::get('asignatura/{cod_asig}', 'AlumnoController@ver_asignatura');
@@ -25,13 +13,12 @@ Route::post('asignatura/{cod_asig}/suscribir', 'AlumnoController@suscribir')->be
 // ruta para dar de baja al usuario logeado de una asignatura
 Route::post('asignatura/{cod_asig}/dardebaja', 'AlumnoController@dardebaja')->before('auth');
 
+
 // buscar las asignaturas existentes en el sistema
 Route::get('buscar', 'AlumnoController@buscarTodas');
 Route::post('buscar/porNombre', 'AlumnoController@buscarPorNombre');
 Route::post('buscar/porDocente', 'AlumnoController@buscarPorDocente');
 
-// seleccionar una publicacion y marcarla como destacada
-Route::post('destacarPublicacion', 'AlumnoController@destacarPublicacion');
 
 // PAGINA DE INICIO GENERICA, REDIRECCIONA SEGUN EL TIPO DE USUARIO
 Route::get('/', function(){
@@ -68,6 +55,10 @@ Route::post('administracion/crearAsignatura','AdministradorController@crearAsign
 // PAGINAS DEL DOCENTE
 Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
+// crear una nueva publicacion (solo para el docente creador)
+Route::get('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@nuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
+// seleccionar una publicacion y marcarla como destacada (solo para el docente creador)
+Route::post('destacarPublicacion/{cod_asig}', 'DocenteController@destacarPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
 
 // PAGINAS DE LOS ALUMNOS
 // listado de las asignaturas a las que esta suscrito
@@ -84,4 +75,19 @@ Route::get('/asigtest/{asig_id}', function($asig_id){
     var_dump( Request::is('asigtest/*') ); // verificar que este en una ruta, util para los menu
     var_dump( Request::segment(2) );  // el segundo elemento de la url, en nuestro caso, el ID
     return "esta url es un test";
+});
+
+// paginas de error
+Route::get('asignatura404', 'AlumnoController@asignaturanoexiste');
+Route::get('noautorizado', function(){
+    // definimos valores por defecto
+    $titulo = "Acceso no permitido";
+    $mensaje = "no puede acceder a esta pagina";
+    // si nos Redirigieron y entregaron un titulo y/o un mensaje, los asignamos
+    if( Session::has('titulo') )
+        $titulo = Session::get('titulo');
+    if( Session::has('mensaje') )
+        $mensaje = Session::get('mensaje');
+    // llamamos a la vista, con el titulo y el mensaje deseado
+    return View::make('noautorizado')->withTitulo($titulo)->withMensaje($mensaje);
 });

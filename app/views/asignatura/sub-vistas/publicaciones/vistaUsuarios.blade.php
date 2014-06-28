@@ -1,4 +1,4 @@
-@extends('asignatura.paraPublico')
+@extends('asignatura.sub-vistas.publicaciones.vistaInvitados')
 
 @section('opciones-encabezado')
     {{-- Si esta suscrito, puede darse de baja. Si no, entonces puede suscribirse--}}

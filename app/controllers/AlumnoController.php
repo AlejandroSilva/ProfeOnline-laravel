@@ -9,27 +9,36 @@ class AlumnoController extends \BaseController {
         return View::make('alumno.suscritas')->with("asignaturas", $asignaturas);
     }
 
+    // pagina publica para mostrar una asignatura que no existe en el sistema
+    public  function asignaturanoexiste(){
+        return View::make('asignatura.noEncontrada');
+    }
+
     public function ver_asignatura($codigo_asignatura){
         // obtenemos la asignatura de interes
         $asignatura = Asignatura::find($codigo_asignatura);
 
         // si la asignatura no existe, mostrar una vista con el error
         if($asignatura==null)
-            return View::make('asignatura.noEncontrada');
+            return Redirect::to('asignatura404');
 
         // definir el tipo de vista para la Asignatura segun el usuario que la visita
         if( Auth::check() ){
             // Si el usuario logeado es el Docente que creo la asignatura, entonces puede Configurar, Enviar documentos, etc.
             if( Auth::user()->codigo_usuario == $asignatura->getDocente()->codigo_usuario ){
                 // mostrar la vista para el Docente Creador (para administrar)
-                return View::make('asignatura.paraDocenteCreador')->with('asignatura', $asignatura);
+                return View::make('asignatura.administrar.base')->with('asignatura', $asignatura)
+                    ->nest('sub_vista', 'asignatura.sub-vistas.publicaciones.vistaDocenteDueno', array('asignatura'=>$asignatura) );    // opciones del Docente creador
+
             }else{
-                // mostrar la vista para un usuario normal
-                return View::make('asignatura.paraUsuarios')->with('asignatura', $asignatura);
+                // mostrar la vista para un usuario normal (suscribir, dar de baja)
+                return View::make('asignatura.base')->with('asignatura', $asignatura)
+                    ->nest('sub_vista', 'asignatura.sub-vistas.publicaciones.vistaUsuarios', array('asignatura'=>$asignatura) );  // opciones de usuario registrado
             }
         }else{
             // mostrar la vista publica de la pagina, sin mayores opciones
-            return View::make('asignatura.paraPublico')->with('asignatura', $asignatura);
+            return View::make('asignatura.base')->with('asignatura', $asignatura)
+                ->nest('sub_vista', 'asignatura.sub-vistas.publicaciones.vistaInvitados', array('asignatura'=>$asignatura) );    // vista publica sin opciones
         }
     }
 
@@ -123,40 +132,5 @@ class AlumnoController extends \BaseController {
 
         // mostrar las asignaturas
         return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
-    }
-    /*
-     * Queda pendiente las verificaciones de:
-     * - el usuario esta logeado? (filtro)
-     * - el usuario es docente? (filtro)
-     * - El usuario es dueño de la publicacion/asignatura?
-    */
-    public function destacarPublicacion(){
-        $codigo_publicacion = Input::get('codigo_publicacion');
-
-        // obtener la publicacion deseada
-        $publicacion = Publicacion::find($codigo_publicacion);
-        if($publicacion==null){
-            return Response::json( array('message'=>'no existe la publicacion que desea calificar'),400);  // bad request
-        }
-
-        // obtener la asignatura a la que pertenece la publicacion
-        $asignatura = $publicacion->asignatura;
-
-        // cualquier publicacion destacada anterior, ahora no lo es
-        foreach( $asignatura->publicacionesDestacadas as $destacada ){
-            $destacada->destacada = 0;
-            $destacada->save();
-        }
-
-        // si la seleccionada es destacada, dejarla como normal
-        if( $publicacion->destacada==1 ){
-            return Response::json( array('message'=>'la publicacion ya no es destacada'), 200);  // bad request
-        }else{
-            // la publicacion seleccionada, es la nueva destacada
-            $publicacion->destacada = 1;
-            $publicacion->save();
-
-            return Response::json( array('message'=>'la publicacion ha sido destacada') );
-        }
     }
 }

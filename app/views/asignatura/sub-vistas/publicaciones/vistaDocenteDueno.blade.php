@@ -1,11 +1,4 @@
-@extends('asignatura.paraPublico')
-
-@section('opciones-encabezado')
-    <div class="opciones">
-        <a class="btn">Enviar <span class="glyphicon glyphicon-cloud-upload"></span></a>
-        <a class="btn">Administrar <span class="glyphicon glyphicon-cog"></span></a>
-    </div>
-@stop
+@extends('asignatura.sub-vistas.publicaciones.vistaInvitados')
 
 @section('opciones-publicacion-destacada')
     <div class="col-md-2">
@@ -28,7 +21,7 @@
 
             $.ajax({
                 type: 'post',
-                url:'{{ URL::to('destacarPublicacion') }}',
+                url:'{{ URL::to('destacarPublicacion/'.$asignatura->codigo_asignatura) }}',
                 data: {
                     codigo_publicacion: cod_pub
                 }

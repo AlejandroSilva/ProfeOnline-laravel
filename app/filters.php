@@ -124,3 +124,21 @@ Route::filter('logeadoComoDocente', function(){
         // si resulta ser docente, no redirigir y continuar con la consulta
     }
 });
+
+Route::filter('duenoDeLaAsignatura', function($route, $request){
+    // obtener el codigo de usuario y la asignatura
+    $cod_asignatura = $route->getParameter('cod_asig');
+    $asignatura = Asignatura::find($cod_asignatura);
+
+    // si no ha sido encontrada, salir
+    if($asignatura==null){
+        return Redirect::to('asignatura404');
+    }
+
+    // si el usuario logeado no es el usuario dueño de la asignatura, salir con error
+    if( Auth::user()->codigo_usuario != $asignatura->getDocente()->codigo_usuario ){
+        return Redirect::to('noautorizado')
+            ->withTitulo('Acceso no autorizado')
+            ->withMensaje('Solo el Docente creador de esta asignatura puede acceder a esta pagina');
+    }
+});
