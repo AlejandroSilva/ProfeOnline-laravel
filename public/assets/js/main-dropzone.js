@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             autoQueue: false, // Make sure the files aren't queued until manually added
             previewsContainer: "#previews", // Define the container to display the previews
             clickable: ".btn-agregar", // Define the element that should be used as click trigger to select files.
-            maxFilesize: 1  // tamaño maximo de los arhivos en Mb
+            maxFilesize: 2 // 2Mb de tamaño maximo de los arhivos (cada uno)
         }
     );
 

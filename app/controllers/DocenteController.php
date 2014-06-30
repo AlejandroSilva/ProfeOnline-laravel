@@ -93,28 +93,35 @@ class DocenteController extends \BaseController {
 
 
     public function post_upload($codigo_publicacion){
-//        return Response::json('success', 200);
         $file = Input::file('file');
-//        dd($file);
         if($file==null){
             return Response::json('no se adjunto ningun archivo', 400);
         }
-
-        // If the uploads fail due to file system, you can try doing public_path().'/uploads'
+        // verificar que la publicacion exista
+        $publicacion = Publicacion::find($codigo_publicacion);
+        if($publicacion==null){
+            return Response::json('la publicacion no existe', 400);
+        }
 
         // generar el nombre del archivo en el servidor
         $carpetaDestino = public_path().'\\documentos\\'.$codigo_publicacion.'\\';
         $fileName = $file->getClientOriginalName();
-        var_dump($fileName);
 
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
         $nombreOriginal = pathinfo($fileName, PATHINFO_FILENAME);
         $nombreNuevo = $this->obtenerNuevoNombre($nombreOriginal, $extension, $carpetaDestino);
 
-//        $upload_success = Input::file('file')->move($carpetaDestino, $nombreNuevo);
+        // mover el documento creado al directorio publico
         $upload_success = $file->move($carpetaDestino, $nombreNuevo);
         if( $upload_success ) {
-            return Response::json($carpetaDestino.$nombreNuevo, 200);
+            // agregar a la base de datos el documento enviado
+            $documento = new Documento;
+            $documento->nombre = $nombreNuevo;
+            $documento->url = 'documentos\\'.$codigo_publicacion.'\\'.$nombreNuevo;
+            $documento->codigo_publicacion = $codigo_publicacion;
+            $documento->save();
+
+            return Response::json($documento->url, 200);
         } else {
             return Response::json('error, no se pudo enviar el documento', 400);
         }

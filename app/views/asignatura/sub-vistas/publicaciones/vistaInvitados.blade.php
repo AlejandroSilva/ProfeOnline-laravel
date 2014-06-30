@@ -27,22 +27,20 @@
                 </div>
                 <p class="descripcion">{{ $publicacion->mensaje }}</p>
             </div>
-            <div class="panel-body">
-                <div class="tabla">
-                    <div class="tabla-row">
-                        <p class="nombre-doc">9- AISLANTES.pdf</p><a href="#" class="link-doc">
-                        <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
-                    </div>
-                    <div class="tabla-row">
-                        <p class="nombre-doc">10- EFECTO JOULE.pdf</p><a href="#" class="link-doc">
-                        <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
-                    </div>
-                    <div class="tabla-row">
-                        <p class="nombre-doc">11- LEY DE OHM.pdf</p><a href="#" class="link-doc">
-                        <span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+            {{-- hack feo para asignar variables dentro de blade: --}}
+            {{-- */   $documentos = $publicacion->documentos()->get()  /* --}}
+            @if( sizeof($documentos)!=0 )
+                <div class="panel-body">
+                    <div class="tabla">
+                        @foreach( $documentos as $documento )
+                        <div class="tabla-row">
+                            <p class="nombre-doc">{{ $documento->nombre }}</p><a href="#" class="link-doc">
+                            <a href="{{ URL::to($documento->url) }}" target="_blank"><span class="glyphicon glyphicon-cloud-download">descargar</span></a>
+                        </div>
+                        @endforeach
                     </div>
                 </div>
-            </div>
+            @endif
             <div class="panel-footer">
                 <div class="row">
                     <div class="col-md-8">
