@@ -24,4 +24,9 @@ class Publicacion extends Eloquent implements UserInterface, RemindableInterface
         // esta Publicacion, pertenece a una Asignatura
         return $this->belongsTo('Asignatura', 'codigo_asignatura');
     }
+
+    // Documentos que estan asociados a esta Publicacion
+    public function documentos(){
+        return $this->hasMany('documento', 'codigo_publicacion');
+    }
 }
