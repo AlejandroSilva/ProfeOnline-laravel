@@ -39,22 +39,20 @@
                         <div class="col-md-12">
                             <!-- HTML heavily inspired by http://blueimp.github.io/jQuery-File-Upload/ -->
                             <div class="table table-striped" class="files" id="previews">
-                                <div id="template" class="file-row row">
+                                <div id="template" class="file-row">
                                     <!-- This is used as the file preview template -->
-                                    <div class="col-md-2">
+                                    <div>
                                         <span class="preview"><img data-dz-thumbnail /></span>
                                     </div>
-
-                                    <div class="col-md-6">
+                                    <div>
                                         <p class="name" data-dz-name></p>
-                                        <p class="size" data-dz-size></p>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-                                          <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
-                                        </div>
                                         <strong class="error text-danger" data-dz-errormessage></strong>
+                                    </div>
+                                    <div class="div-progreso">
+                                        <p class="size" data-dz-size></p>
+                                        <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
