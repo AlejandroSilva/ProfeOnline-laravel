@@ -47,31 +47,15 @@
 
                                     <div class="col-md-6">
                                         <p class="name" data-dz-name></p>
-                                        <strong class="error text-danger" data-dz-errormessage></strong>
+                                        <p class="size" data-dz-size></p>
                                     </div>
 
                                     <div class="col-md-4">
-                                        <p class="size" data-dz-size></p>
                                         <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                                           <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
                                         </div>
+                                        <strong class="error text-danger" data-dz-errormessage></strong>
                                     </div>
-                                    <!--
-                                    <div class="col-md-3">
-                                      <button class="btn btn-primary start">
-                                          <i class="glyphicon glyphicon-upload"></i>
-                                          <span>Start</span>
-                                      </button>
-                                      <button data-dz-remove class="btn btn-warning cancel">
-                                          <i class="glyphicon glyphicon-ban-circle"></i>
-                                          <span>Cancel</span>
-                                      </button>
-                                      <button data-dz-remove class="btn btn-danger delete">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                        <span>Delete</span>
-                                      </button>
-                                    </div>
-                                    -->
                                 </div>
                             </div>
                         </div>
@@ -118,7 +102,6 @@
 <script src="{{url('assets/vendor/dropzone.js')}}"></script>
 <script src="{{url('assets/js/main-dropzone.js')}}"></script>
 <script>
-
     var crearPublicacion = function(){
         var def = $.Deferred();
         $.ajax({
@@ -145,6 +128,10 @@
         evt.preventDefault();
 
         crearPublicacion().done(function(resp){
+            // eliminar de la lista, todos los documentos con problemas
+            myDropzone.getFilesWithStatus(Dropzone.ERROR).forEach(function(archivo){
+                myDropzone.removeFile(archivo)
+            });
             // bloqueamos el formulario
             bloquear_formulario();
 
@@ -189,5 +176,4 @@
         // mostrar el mensaje final
         $('.completado').show();
     }
-
 </script>

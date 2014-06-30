@@ -18,7 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
             autoQueue: false, // Make sure the files aren't queued until manually added
             previewsContainer: "#previews", // Define the container to display the previews
             clickable: ".btn-agregar", // Define the element that should be used as click trigger to select files.
-            maxFilesize: 2 // 2Mb de tamaño maximo de los arhivos (cada uno)
+            maxFilesize: 2, // 2Mb de tamaño maximo de los arhivos (cada uno)
+            dictFileTooBig: "Este archivo es muy grande (maximo {{maxFilesize}}Mb). No se adjuntara a la publicación."
         }
     );
 
@@ -35,6 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Oculta la barra de carga total cuando no queda nada mas que enviar
     myDropzone.on("queuecomplete", function(progress) {
-        publicacion_terminada();
+        console.log("queuecomplete-laravel");
+        // si llego por un archivo con error (tamaño maximo), ignorar y no hacer nada
+        if(myDropzone.getFilesWithStatus(Dropzone.ERROR).length==0)
+            publicacion_terminada();
     });
 });
