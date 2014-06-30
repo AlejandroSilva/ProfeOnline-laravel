@@ -153,8 +153,13 @@
 
             // cambiar la url en donde entregara los documentos
             window.myDropzone.options.url = "http://localhost/ProfeOnline-laravel/public/upload/" + codigo_publicacion;
-            // comenzar a enviar los documentos
-            myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+            // si existen... comenzar a enviar los documentos
+            if( myDropzone.files.length>0 )
+                myDropzone.enqueueFiles(myDropzone.getFilesWithStatus(Dropzone.ADDED));
+            else
+                publicacion_terminada();
+        }).fail(function(){
+            console.log("ocurrio un problema con la creacion de la publicacion");
         });
     });
 
@@ -173,6 +178,16 @@
     };
     var resetear_formulario = function(){
         $('.fileupload-process').hide();
+    }
+    var publicacion_terminada = function(){
+        // bloquear las acciones
+        $(".acciones").hide();
+        // ocultar el progreso
+        $('.progreso').hide();
+        // ocultar los documentos enviados
+        myDropzone.removeAllFiles(true);
+        // mostrar el mensaje final
+        $('.completado').show();
     }
 
 </script>

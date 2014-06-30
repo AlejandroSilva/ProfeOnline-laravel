@@ -35,13 +35,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Oculta la barra de carga total cuando no queda nada mas que enviar
     myDropzone.on("queuecomplete", function(progress) {
-        // bloquear las acciones
-        $(".acciones").hide();
-        // ocultar el progreso
-        $('.progreso').hide();
-        // ocultar los documentos enviados
-        myDropzone.removeAllFiles(true);
-        // mostrar el mensaje final
-        $('.completado').show();
+        publicacion_terminada();
     });
 });
