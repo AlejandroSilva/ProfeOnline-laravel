@@ -4,7 +4,7 @@
     {{-- Si esta suscrito, puede darse de baja. Si no, entonces puede suscribirse--}}
     @if( Auth::user()->estaSuscritoA( $asignatura->codigo_asignatura )==true )
         {{ Form::open(array(
-        'url'=>'asignatura/'.$asignatura->codigo_asignatura.'/dardebaja',
+            'url'=>'asignatura/'.$asignatura->codigo_asignatura.'/dardebaja',
             'class'=>'form-suscribir'
         )) }}
         {{ Form::submit('Dar de Baja', array('class'=>'btn btn-warning suscribete') ) }}

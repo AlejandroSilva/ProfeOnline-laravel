@@ -56,7 +56,8 @@ Route::post('administracion/crearAsignatura','AdministradorController@crearAsign
 Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDocente');
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
 // crear una nueva publicacion (solo para el docente creador)
-Route::get('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@nuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
+Route::get('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@formularioNuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
+Route::post('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@postNuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
 // seleccionar una publicacion y marcarla como destacada (solo para el docente creador)
 Route::post('destacarPublicacion/{cod_asig}', 'DocenteController@destacarPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
 
@@ -88,6 +89,12 @@ Route::get('noautorizado', function(){
         $titulo = Session::get('titulo');
     if( Session::has('mensaje') )
         $mensaje = Session::get('mensaje');
-    // llamamos a la vista, con el titulo y el mensaje deseado
-    return View::make('noautorizado')->withTitulo($titulo)->withMensaje($mensaje);
+
+    // llamamos a la vista, con el titulo y el mensaje deseado y el codigo 403 (acceso prohibido)
+    return Response::view('noautorizado', array(
+        'titulo'=>$titulo,
+        'mensaje'=>$mensaje
+    ), 403);
 });
+
+Route::post('upload/{cod_publicacion}', 'DocenteController@post_upload');

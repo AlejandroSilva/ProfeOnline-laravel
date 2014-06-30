@@ -10,3 +10,5 @@ Thumbs.db
 
 .idea/*
 _ide_helper.php
+## ignorar los documentos que son subidos al servidor
+public/documentos/*/*
