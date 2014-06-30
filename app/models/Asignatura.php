@@ -46,12 +46,12 @@ class Asignatura extends Eloquent implements UserInterface, RemindableInterface 
     public function publicaciones(){
         return $this->hasMany('Publicacion', 'codigo_asignatura');
     }
-    // retorna la o las publicaciones destacadas existentes
+    // retorna la o las publicaciones destacadas existentes, de mas nuevas a mas antiguas
     public function publicacionesDestacadas(){
-        return $this->publicaciones()->where('destacada', '=', '1');
+        return $this->publicaciones()->where('destacada', '=', '1')->orderBy('codigo_publicacion', 'desc');;
     }
-    // retorna la o las publicaciones "normales" (no destacadas)
+    // retorna la o las publicaciones "normales" (no destacadas), de mas nuevas a mas antiguas
     public function publicacionesNormales(){
-        return $this->publicaciones()->where('destacada', '=', '0');
+        return $this->publicaciones()->where('destacada', '=', '0')->orderBy('codigo_publicacion', 'desc');
     }
 }
