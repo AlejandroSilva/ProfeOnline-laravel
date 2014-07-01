@@ -2,8 +2,13 @@
 
 class SessionController extends \BaseController {
 
+    // muestra el formulario de registro
+    public function formulario_registro(){
+        return View::make('registro');
+    }
+
     // post para crear un usuario
-    public function registro(){
+    public function post_registro(){
         // reglas para validar que el nuevo usuario sea valido
         $validacion = Validator::make( Input::all(), [
             'nombre' => 'required',
@@ -29,7 +34,7 @@ class SessionController extends \BaseController {
         }
     }
 
-	public function login(){
+	public function formulario_login(){
         // si estoy logeado, ir a INICIO
         if( Auth::check() ){
             return Redirect::to('/');
@@ -39,7 +44,8 @@ class SessionController extends \BaseController {
             return View::make('loginForm');
         }
 	}
-	public function validar(){
+
+	public function post_login(){
         // validar los datos de entrada
         $validacion = Validator::make( Input::all(), [
             'email' => 'required',
@@ -66,4 +72,21 @@ class SessionController extends \BaseController {
         // volver a INICIO
         return Redirect::to('/');
 	}
+
+    public function noautorizado(){
+        // definimos valores por defecto
+        $titulo = "Acceso no permitido";
+        $mensaje = "no puede acceder a esta pagina";
+        // si nos Redirigieron y entregaron un titulo y/o un mensaje, los asignamos
+        if( Session::has('titulo') )
+            $titulo = Session::get('titulo');
+        if( Session::has('mensaje') )
+            $mensaje = Session::get('mensaje');
+
+        // llamamos a la vista, con el titulo y el mensaje deseado y el codigo 403 (acceso prohibido)
+        return Response::view('noautorizado', array(
+            'titulo'=>$titulo,
+            'mensaje'=>$mensaje
+        ), 403);
+    }
 }

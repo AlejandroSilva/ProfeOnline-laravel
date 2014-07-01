@@ -9,11 +9,6 @@ class AlumnoController extends \BaseController {
         return View::make('alumno.suscritas')->with("asignaturas", $asignaturas);
     }
 
-    // pagina publica para mostrar una asignatura que no existe en el sistema
-    public  function asignaturanoexiste(){
-        return View::make('asignatura.noEncontrada');
-    }
-
     public function ver_asignatura($codigo_asignatura){
         // obtenemos la asignatura de interes
         $asignatura = Asignatura::find($codigo_asignatura);
@@ -42,7 +37,7 @@ class AlumnoController extends \BaseController {
         }
     }
 
-    public function suscribir($codigo_asignatura){
+    public function post_suscribir($codigo_asignatura){
         $codigo_usuario =  Auth::user()->codigo_usuario;
 
         // validar que la asignatura exista
@@ -67,7 +62,7 @@ class AlumnoController extends \BaseController {
         return Redirect::back();
     }
 
-    public function dardebaja($codigo_asignatura){
+    public function post_dardebaja($codigo_asignatura){
         $codigo_usuario =  Auth::user()->codigo_usuario;
 
         // validar que la asignatura exista
@@ -97,40 +92,4 @@ class AlumnoController extends \BaseController {
         return Redirect::back();
     }
 
-    // muestra todas las asignaturas existentes en el sistema
-    public function buscarTodas(){
-        // obtener todas las asignaturas
-        $asignatura = Asignatura::all();
-        // mostrar las asignaturas
-        return View::make('alumno.buscar')->with("asignaturas", $asignatura);
-    }
-
-    // muestra las asignaturas que contienen dentro de su nombre el texto ingresado en el formulario
-    public function buscarPorNombre(){
-        // el nombre buscado por el formulario
-        $nombre = Input::get('nombre');
-        // hacer la consulta para obtener las asignaturas
-        $asignaturas = Asignatura::where('nombre', 'LIKE', '%'.$nombre.'%')->get();
-        // mostrar las asignaturas
-        return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
-    }
-
-    // muestra las asignaturas que son creadas por el nombre del docente que se ingreso en el formulario
-    public function buscarPorDocente(){
-        // el nombre buscado por el formulario
-        $nombreDocente = Input::get('nombreDocente');
-
-        // obtener el listado de usuarios/docentes que tengan el strign en sus nombres
-        $docentes = User::where('nombre', 'LIKE', '%'.$nombreDocente.'%')->get();
-
-        // obtener todas las asignaturas de los usuarios/docentes que se encontraron
-        $asignaturas = array();
-        foreach($docentes as $docente){
-            // obtener las asignaturas
-            $asignaturas = array_merge( $asignaturas, $docente->asignaturasCreadas() );
-        }
-
-        // mostrar las asignaturas
-        return View::make('alumno.buscar')->with("asignaturas", $asignaturas);
-    }
 }
