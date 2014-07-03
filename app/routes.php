@@ -26,6 +26,11 @@ Route::get('docente/inicio', 'DocenteController@inicio')->before('logeadoComoDoc
 // muestra las asignaturas que el docente ha creado
 Route::get('docente/misAsignaturas', 'DocenteController@misAsignaturas')->before('logeadoComoDocente');
 
+// CREACION DE ASIGNATURAS
+Route::get('docente/nuevaAsignatura', 'DocenteController@formularioNuevaAsignatura')->before('logeadoComoDocente');
+Route::post('docente/nuevaAsignatura', 'DocenteController@post_nuevaAsignatura')->before('logeadoComoDocente');
+
+
 // GESTION DE PUBLICACIONES
 // formulario para crear una nueva publicacion (solo para el docente creador)
 Route::get('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@formularioNuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
@@ -46,7 +51,6 @@ Route::get('administracion/carreras', 'AdministradorController@carreras')->befor
 Route::post('administracion/crearCarrera','AdministradorController@crearCarrera')->before('logeadoComoAdministrador');
 Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')->before('logeadoComoAdministrador');
 Route::post('administracion/crearAsignatura','AdministradorController@crearAsignatura')->before('logeadoComoAdministrador');
-
 
 // CONTROL DE SESSIONES / REGISTRO / LOGIN / LOGOUT
 Route::get('login', 'SessionController@formulario_login');

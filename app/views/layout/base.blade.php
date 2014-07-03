@@ -38,7 +38,7 @@
                         @if( Auth::user()->esAdministrador() )
                             <li class=""><a href="{{URL::to('/')}}">Administracion</a></li>
                         @elseif( Auth::user()->esDocente() )
-                            <li class=""><a href="{{URL::to('/docente/misAsignaturas')}}">MisAsignaturas</a></li>
+                            <li class=""><a href="{{URL::to('/docente/misAsignaturas')}}">Mis Asignaturas</a></li>
                         @endif
                     @endif
                 </ul>

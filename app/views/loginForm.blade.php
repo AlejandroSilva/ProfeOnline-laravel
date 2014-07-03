@@ -4,7 +4,7 @@
     <div>
         <h1>Acceso a Profe Online</h1>
         {{ Form::open([
-            'action'=>'SessionController@validar'
+            'action'=>'SessionController@post_login'
         ]) }}
         <div>
             {{ Form::label("email", "Correo electronico") }}

@@ -135,4 +135,43 @@ class DocenteController extends \BaseController {
             $nombreNuevo = $nombre.' ('.$i++.').'.$extension;
         return $nombreNuevo;
     }
+
+    public function formularioNuevaAsignatura(){
+        // entregamos las Carreras, para que sea agregado al combobox del formulario,
+        // pero primero la mapeamos a otro formato:   array(codigo_carrera=>nombre)
+        $carreras = array();
+        foreach( Carrera::all() as $carrera )
+            $carreras[$carrera->codigo_carrera] = $carrera->nombre;
+
+        return View::make('docente.nuevaAsignatura')->with('carreras', $carreras);
+    }
+    public function post_nuevaAsignatura(){
+        // validar los datos de entrada
+        $validacion = Validator::make( Input::all(), [
+            'codigo_carrera' => 'required',
+            'nombre' => 'required',
+            'anno' => 'required'
+        ]);
+        // si la validacion falla, mostrar los mensajes de error
+        if( $validacion->fails() )
+            return Redirect::back()->withInput()->withErrors( $validacion->messages() );
+        else{
+            // si la validacion fue correcta, intentar crear la sede
+            $asignatura = new Asignatura;
+            $asignatura->codigo_carrera = Input::get('codigo_carrera');
+            $asignatura->nombre = Input::get('nombre');
+            $asignatura->anno = Input::get('anno');
+            $asignatura->save();
+
+            // una vez creada la asignatura, se debe registrar el usuario actual como "Docente creador"
+            $nuevaSuscripcion = new Suscripcion;
+            $nuevaSuscripcion->codigo_usuario = Auth::user()->codigo_usuario;
+            $nuevaSuscripcion->codigo_asignatura = $asignatura->codigo_asignatura;
+            $nuevaSuscripcion->codigo_tipo_suscripcion = 1; // tipo "Creador"
+            $nuevaSuscripcion->save();
+
+            // si se creo correctamente, ir a la pagina de la nueva asignatura
+            return Redirect::to('/asignatura/'.$asignatura->codigo_asignatura);
+        }
+    }
 }
