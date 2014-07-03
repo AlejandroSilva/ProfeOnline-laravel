@@ -49,8 +49,6 @@ Route::get('administracion/sedes', 'AdministradorController@sedes')->before('log
 Route::post('administracion/crearSede','AdministradorController@crearSede')->before('logeadoComoAdministrador');
 Route::get('administracion/carreras', 'AdministradorController@carreras')->before('logeadoComoAdministrador');
 Route::post('administracion/crearCarrera','AdministradorController@crearCarrera')->before('logeadoComoAdministrador');
-Route::get('administracion/asignaturas', 'AdministradorController@asignaturas')->before('logeadoComoAdministrador');
-Route::post('administracion/crearAsignatura','AdministradorController@crearAsignatura')->before('logeadoComoAdministrador');
 
 // CONTROL DE SESSIONES / REGISTRO / LOGIN / LOGOUT
 Route::get('login', 'SessionController@formulario_login');

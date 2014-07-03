@@ -64,33 +64,6 @@ class AdministradorController extends \BaseController {
             return View::make('administrador.carreras')->with('creacionCorrecta', 1);
         }
     }
-
-    public function asignaturas(){
-        return View::make('administrador.asignaturas');
-    }
-
-    // metodo POST para la creacion de una Asignatura (se llama desde un formulario)
-    public function crearAsignatura(){
-        // validar los datos de entrada
-        $validacion = Validator::make( Input::all(), [
-            'codigo_carrera' => 'required',
-            'nombre' => 'required',
-            'anno' => 'required'
-        ]);
-        // si la validacion falla, mostrar los mensajes de error
-        if( $validacion->fails() )
-            return Redirect::back()->withInput()->withErrors( $validacion->messages() );
-        else{
-            // si la validacion fue correcta, intentar crear la sede
-            $asignatura = new Asignatura;
-            $asignatura->codigo_carrera = Input::get('codigo_carrera');
-            $asignatura->nombre = Input::get('nombre');
-            $asignatura->anno = Input::get('anno');
-            $asignatura->save();
-            // si se creo correctamente, volver a cargar la vista
-            return View::make('administrador.asignaturas')->with('creacionCorrecta', 1);
-        }
-    }
 }
 
 
@@ -108,14 +81,4 @@ View::composer('administrador.carreras', function ($view) {
     $view->sedes = array();
     foreach( Sede::all() as $sede )
         $view->sedes[$sede->codigo_sede] = $sede->nombre;
-});
-View::composer('administrador.asignaturas', function ($view) {
-    // a la vista le entregamos todas las Asignaturas, para mostrar en la tabla
-    $view->asignaturas = Asignatura::all();
-
-    // entregamos las Carreras, para que sea agregado al combobox del formulario,
-    // pero primero la mapeamos a otro formato:   array(codigo_carrera=>nombre)
-    $view->carreras = array();
-    foreach( Carrera::all() as $carrera )
-        $view->carreras[$carrera->codigo_carrera] = $carrera->nombre;
 });

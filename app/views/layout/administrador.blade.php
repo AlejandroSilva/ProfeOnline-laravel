@@ -7,6 +7,5 @@
     <li class="{{ Request::is('administracion/inicio') ? 'active' : '' }}"><a href="{{URL::to('/')}}">Inicio</a></li>
     <li class="{{ Request::is('administracion/sedes') ? 'active' : '' }}"><a href="{{URL::action('AdministradorController@sedes')}}">Sedes</a></li>
     <li class="{{ Request::is('administracion/carreras') ? 'active' : '' }}"><a href="{{URL::action('AdministradorController@carreras')}}">Carreras</a></li>
-    <li class="{{ Request::is('administracion/asignaturas') ? 'active' : '' }}"><a href="{{URL::action('AdministradorController@asignaturas')}}">Asignaturas</a></li>
 </ul>
 @stop
