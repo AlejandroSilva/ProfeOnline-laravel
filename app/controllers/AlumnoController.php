@@ -92,4 +92,34 @@ class AlumnoController extends \BaseController {
         return Redirect::back();
     }
 
+
+    public function post_verPublicacion(){
+        // verificar que la publicacion exista
+        $publicacion = Publicacion::find( Input::get('codigo_publicacion') );
+        if($publicacion==null)
+            return Response::json("la publicacion no existe", 400);
+
+        // verificar que el usuario logeado, este suscrito
+        $usuario = Auth::user();
+        $suscripcion = Suscripcion::where('codigo_usuario', '=', $usuario->codigo_usuario)->where('codigo_asignatura', '=', $publicacion->asignatura->codigo_asignatura)->first();
+        if($suscripcion==null)
+            return Response::json("no estas suscrito a esta asignatura", 400);
+
+        // verificar que antes no haya leido la publicacion
+        $estadoAnterior = EstadoPublicacion::where('codigo_suscripcion', '=', $suscripcion->codigo_suscripcion)->where('codigo_publicacion', '=', $publicacion->codigo_publicacion)->first();
+        if($estadoAnterior!=null)
+            return Response::json("solo puede marcar la suscripcion como leida una vez", 400);
+
+        // crear la publicacion
+        $estadoPublicacion = new EstadoPublicacion;
+        $estadoPublicacion->codigo_suscripcion = $suscripcion->codigo_suscripcion;
+        $estadoPublicacion->codigo_publicacion = $publicacion->codigo_publicacion;
+        $estadoPublicacion->save();
+
+        // retornar datos en caso de que sean necesarios
+        return Response::json(array(
+            'codigo_suscripcion'=>$estadoPublicacion->codigo_suscripcion,
+            'codigo_publicacion'=>$estadoPublicacion->codigo_publicacion
+        ));
+    }
 }

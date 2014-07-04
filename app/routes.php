@@ -38,6 +38,8 @@ Route::get('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@formula
 Route::post('asignatura/{cod_asig}/nueva-publicacion', 'DocenteController@postNuevaPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
 // seleccionar una publicacion y marcarla como destacada (solo para el docente creador)
 Route::post('destacarPublicacion/{cod_asig}', 'DocenteController@destacarPublicacion')->before('logeadoComoDocente')->before('duenoDeLaAsignatura');
+// marca una publicacion como leida, solo para los usuarios suscritos a una asugnatura
+Route::post('verPublicacion', 'AlumnoController@post_verPublicacion')->before('auth');
 // envio de documentos al servidor
 Route::post('upload/{cod_publicacion}', 'DocenteController@post_upload');
 

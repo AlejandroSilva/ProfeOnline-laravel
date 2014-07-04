@@ -20,3 +20,26 @@
         {{ Form::close()  }}
     @endif
 @stop
+
+@section('footer')
+    <script>
+        $(function(){
+            $('.panel-documentos>.panel-heading, .panel-documentos>.panel-footer, .mensaje-del-dia').on('click', function(evt){
+                var $article_publicacion = $(this).closest('article');
+                console.log(  );
+
+                $.ajax({
+                    type: 'post',
+                    url:'{{ URL::to('verPublicacion') }}',
+                    data: {
+                        codigo_publicacion: $article_publicacion.data('codigo_publicacion')
+                    }
+                }).done(function(resp){
+                    $article_publicacion.addClass('ya-visto');
+                    console.log(resp);
+                });
+
+            });
+        });
+    </script>
+@stop
