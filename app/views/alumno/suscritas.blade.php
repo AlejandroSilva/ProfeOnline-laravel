@@ -1,16 +1,7 @@
 @extends('layout.doscolumnas')
 
 @section('columna-lateral')
-    <h3>Mis asignaturas</h3>
-    <ul class="nav nav-pills nav-stacked">
-        @foreach( $suscripciones as $sus )
-            <li class="">
-                <a href="{{ URL::to('asignatura/'.$sus->asignatura->codigo_asignatura) }}">{{ $sus->asignatura->nombre}}
-                    <span class="badge pull-right">{{ sizeof($sus->publicaciones_no_vistas()) }}</span>
-                </a>
-            </li>
-        @endforeach
-    </ul>
+    @include('asignatura.sub-vistas.lateral_misasignaturas', $suscripciones)
 @stop
 
 @section('columna-central')

@@ -28,7 +28,7 @@ class AlumnoController extends \BaseController {
             }else{
                 // mostrar la vista para un usuario normal (suscribir, dar de baja)
                 return View::make('asignatura.base')->with('asignatura', $asignatura)
-                    ->nest('sub_vista', 'asignatura.sub-vistas.publicaciones.vistaUsuarios', array('asignatura'=>$asignatura) );  // opciones de usuario registrado
+                    ->nest('sub_vista', 'asignatura.sub-vistas.publicaciones.vistaUsuarios', array('asignatura'=>$asignatura, 'suscripciones'=>Auth::user()->suscripciones ));  // opciones de usuario registrado
             }
         }else{
             // mostrar la vista publica de la pagina, sin mayores opciones

@@ -1,5 +1,9 @@
 @extends('asignatura.sub-vistas.publicaciones.vistaInvitados')
 
+@section('columna-lateral')
+    @include('asignatura.sub-vistas.lateral_misasignaturas', $suscripciones)
+@stop
+
 @section('opciones-encabezado')
     {{-- Si esta suscrito, puede darse de baja. Si no, entonces puede suscribirse--}}
     @if( Auth::user()->estaSuscritoA( $asignatura->codigo_asignatura )==true )
