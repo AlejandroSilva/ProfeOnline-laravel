@@ -4,17 +4,29 @@ class GenericController extends \BaseController {
 
     public function inicio(){
         // si no esta logeado, mostrar la pagina HOME
-        if( Auth::guest() )
+        if( Auth::guest() ) {
             return View::make('home');
-        elseif( Auth::user()->esAdministrador() )
-            return Redirect::to('administracion/inicio');
-        elseif( Auth::user()->esDocente() )
-            return Redirect::to('docente/inicio');
-        elseif( Auth::user()->esAlumno() )
-            return View::make('alumno/inicio');
-        else{
-            return "no existe una pagina de inicio para tu tipo de usuario, contacta al administrador";
         }
+        else{
+            $usuario = Auth::user();
+            // si es administrador, mostrar su pagina de inicio
+            if( $usuario->esAdministrador() ) {
+                return Redirect::to('administracion/inicio');
+            }
+            // si es usuario o docente, mostrar las ultimas publicaciones
+            else{
+                // obtener las suscripciones
+                $suscripciones = $usuario->suscripciones;
+                return View::make('asignatura.nuevas_publicaciones')->with('suscripciones', $suscripciones);
+            }
+        }
+//        elseif( Auth::user()->esDocente() )
+//            return Redirect::to('docente/inicio');
+//        elseif( Auth::user()->esAlumno() )
+//            return View::make('alumno/inicio');
+//        else{
+//            return "no existe una pagina de inicio para tu tipo de usuario, contacta al administrador";
+//        }
     }
 
     // muestra todas las asignaturas existentes en el sistema

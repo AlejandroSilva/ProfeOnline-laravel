@@ -1,7 +1,7 @@
 @if($publicacion->haSidoVista() )
-    <article class="panel panel-documentos ya-visto" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}">
+    <article class="panel panel-documentos ya-visto" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}" id="{{ $publicacion->codigo_publicacion}}">
 @else
-    <article class="panel panel-documentos sombra" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}">
+    <article class="panel panel-documentos sombra" data-codigo_publicacion="{{ $publicacion->codigo_publicacion}}" id="{{ $publicacion->codigo_publicacion}}">
 @endif
 
     <div class="panel-heading">

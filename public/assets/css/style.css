@@ -136,7 +136,7 @@ body {
 
 /* el alto bloque blanco de la pagina cubre toda la pagina */
 html, body, .bg-blanco{
-    height: 100%;
+    min-height: 100%;
 }
 
 .mensaje-del-dia a{
