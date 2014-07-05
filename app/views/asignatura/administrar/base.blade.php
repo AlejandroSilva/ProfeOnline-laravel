@@ -2,8 +2,7 @@
 
 @section('opciones-encabezado')
     <div class="opciones">
-        <a class="btn" href="{{  URL::to('/asignatura/'.$asignatura->codigo_asignatura.'/nueva-publicacion') }}">Nuva publicacion<span class="glyphicon glyphicon-cloud-upload"></span></a>
-        <a class="btn">Administrar <span class="glyphicon glyphicon-cog"></span></a>
+        <a class="btn" href="{{  URL::to('/asignatura/'.$asignatura->codigo_asignatura.'/nueva-publicacion') }}">Nueva publicacion<span class="glyphicon glyphicon-cloud-upload"></span></a>
     </div>
 @stop
 

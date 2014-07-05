@@ -1,7 +1,7 @@
     <h3>Asignaturas suscritas</h3>
     <ul class="nav nav-pills nav-stacked">
         @foreach( $suscripciones as $sus )
-            <li class="{{ Request::is('asignatura/'.$sus->asignatura->codigo_asignatura) ? 'active' : '' }}">
+            <li class="{{ Request::is('asignatura/'.$sus->asignatura->codigo_asignatura) ? 'active' : '' }}" data-codigo_asignatura="{{ $sus->asignatura->codigo_asignatura }}">
                 <a href="{{ URL::to('asignatura/'.$sus->asignatura->codigo_asignatura) }}">{{ $sus->asignatura->nombre}}
                     {{-- hack feo para asignar variables dentro de blade: --}}
                     {{-- */   $contador = sizeof($sus->publicaciones_no_vistas())  /* --}}

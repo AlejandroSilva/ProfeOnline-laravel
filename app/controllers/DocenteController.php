@@ -84,6 +84,16 @@ class DocenteController extends \BaseController {
         $publicacion->codigo_asignatura = $codigo_asignatura;
         $publicacion->save();
 
+        // obtener la suscripcion del usuario
+        $usuario = Auth::user();
+        $suscripcion = Suscripcion::where('codigo_usuario', '=', $usuario->codigo_usuario)->where('codigo_asignatura', '=', $asignatura->codigo_asignatura)->first();
+
+        // marcar la publicacion como leida por el propio creador
+        $estadoPublicacion = new EstadoPublicacion;
+        $estadoPublicacion->codigo_suscripcion = $suscripcion->codigo_suscripcion;
+        $estadoPublicacion->codigo_publicacion = $publicacion->codigo_publicacion;
+        $estadoPublicacion->save();
+
         // entregar el codigo de la publicacion
         return Response::json(array(
             "estado"=>"creacion correcta",

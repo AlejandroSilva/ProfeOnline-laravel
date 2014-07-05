@@ -39,7 +39,12 @@
                         codigo_publicacion: $article_publicacion.data('codigo_publicacion')
                     }
                 }).done(function(resp){
+                    // agregar clase para que el cambio sea visible
                     $article_publicacion.addClass('ya-visto');
+                    // descontar 1 al contador de publicaciones no leidas de la asignatura
+                    $span = $("ul").find("[data-codigo_asignatura="+resp.codigo_asignatura+"]").find('span');
+                    $span.text( $span.text()-1 );
+                    // imprimir la respuesta en consola
                     console.log(resp);
                 });
 

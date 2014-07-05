@@ -110,7 +110,7 @@ class AlumnoController extends \BaseController {
         if($estadoAnterior!=null)
             return Response::json("solo puede marcar la suscripcion como leida una vez", 400);
 
-        // crear la publicacion
+        // marcar la Publicacion como leida
         $estadoPublicacion = new EstadoPublicacion;
         $estadoPublicacion->codigo_suscripcion = $suscripcion->codigo_suscripcion;
         $estadoPublicacion->codigo_publicacion = $publicacion->codigo_publicacion;
@@ -119,7 +119,8 @@ class AlumnoController extends \BaseController {
         // retornar datos en caso de que sean necesarios
         return Response::json(array(
             'codigo_suscripcion'=>$estadoPublicacion->codigo_suscripcion,
-            'codigo_publicacion'=>$estadoPublicacion->codigo_publicacion
+            'codigo_publicacion'=>$estadoPublicacion->codigo_publicacion,
+            'codigo_asignatura'=>$publicacion->asignatura->codigo_asignatura
         ));
     }
 }
