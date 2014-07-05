@@ -3,10 +3,10 @@
 class AlumnoController extends \BaseController {
 
     public function suscritas(){
-        // obtenemos el listado de las asignaturas suscritas
-        $asignaturas = Auth::user()->asignaturasSuscritas();
+        // obtenemos el listado de las suscripciones
+        $suscripciones = Auth::user()->suscripciones;
         // se las entregamos a la vista para que las muestre
-        return View::make('alumno.suscritas')->with("asignaturas", $asignaturas);
+        return View::make('alumno.suscritas')->with("suscripciones", $suscripciones);
     }
 
     public function ver_asignatura($codigo_asignatura){

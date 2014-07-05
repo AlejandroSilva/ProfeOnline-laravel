@@ -26,4 +26,28 @@ class Suscripcion extends Eloquent implements UserInterface, RemindableInterface
         // esta Suscripcion, esta asociada a UN Usuario
         return $this->belongsTo('User', 'codigo_usuario');
     }
+
+    // entrega un listado de todas las publicaciones que no han sido vistas (los mas nuevos primero)
+    public function publicaciones_no_vistas(){
+        $codigo_suscripcion = $this->codigo_suscripcion;
+
+        // obtener todas las publicaciones
+        $publicaciones = $this->asignatura->publicaciones;
+
+        // definir un arreglo para las publicaciones que no han sido vistas
+        $publicacionesNoVistas = array();
+
+        // recorrer la lista
+        foreach($publicaciones as $publicacion){
+            // obtener el estado de la Publicacion para esta Suscripcion
+            $estadoSuscripcion = EstadoPublicacion::where('codigo_suscripcion', '=', $codigo_suscripcion)->where('codigo_publicacion', '=', $publicacion->codigo_publicacion)->first();
+            // si no ha sido vista, agregar al arreglo
+            if($estadoSuscripcion==null){
+                array_push($publicacionesNoVistas, $publicacion);
+            }
+        }
+
+        // retornar las publicaciones no vistas (de mas nuevas a mas antiguas)
+        return array_reverse($publicacionesNoVistas);
+    }
 }

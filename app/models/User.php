@@ -57,20 +57,6 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Suscripcion', 'codigo_usuario', 'codigo_usuario')->where('codigo_tipo_suscripcion', '=', '1');
     }
 
-    // entrega un array con todas las asignaturas que esta suscrito el usuario
-    public function asignaturasSuscritas(){
-        // obtenemos las suscripciones relacionadas a este usuario
-        $suscripciones = $this->suscripciones;
-
-        // creamos un nuevo arreglo
-        $asignaturas = array();
-        // agregamos cada asignatura que este asociada a las suscripciones
-        foreach( $suscripciones as $sus )
-            array_push($asignaturas, $sus->asignatura);
-        // entregamos el listado de asignaturas
-        return $asignaturas;
-    }
-
     // entrega un array con todas las asignaturas creadas por el usuario
     public function asignaturasCreadas(){
         // obtenemos las suscripciones relacionadas a este usuario
